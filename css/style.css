@@ -70,7 +70,7 @@ header img {
   padding-left: 35px;
   border: none;
   border-radius: 20px;
-  box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 1px 3px 2px rgba(0, 0, 0, 0.25);
   background-image: url(/assets/icons/search.png);
   background-repeat: no-repeat;
   background-position: 10px 50%;
@@ -81,8 +81,17 @@ header img {
   height: 40px;
   border: none;
   border-radius: 50%;
-  box-shadow: inset 0px 1px 3px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 1px 3px 2px rgba(0, 0, 0, 0.25);
   background-color: var(--grayscale-white);
+}
+
+main {
+  max-width: 1250px;
+  min-height: 600px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  box-shadow: inset 0px 1px 3px 2px rgba(0, 0, 0, 0.25);
+  background-color: var(--grayscale-background);
 }
 
 footer {
