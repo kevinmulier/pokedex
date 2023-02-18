@@ -191,7 +191,8 @@ footer p {
 /* Focus */
 
 .searchBarSection input:focus-visible,
-.searchBarSection .sortByButton:focus-visible {
+.searchBarSection .sortByButton:focus-visible,
+.pokemonCardMini:focus-visible {
   outline: 3px dashed black;
 }
 
