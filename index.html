@@ -8,9 +8,10 @@
     <title>Pokédex - par Kevin Mulier</title>
 
     <!-- external CSS link -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -26,7 +27,9 @@
     </section>
 
     <main>
-      <section class="cardsSection"></section>
+      <section class="cardsSection">
+        <span class="loading">Chargement des Pokémons<span>...</span></span>
+      </section>
       <button class="morePokemons" onclick="addNewCards(30)">+</button>
     </main>
 
