@@ -106,8 +106,10 @@ async function fetchAllPokemons() {
 
 async function addNewCards(num = 50) {
   document.querySelector(".loading").style.display = "block";
+  document.querySelector(".morePokemons").style.display = "none";
   await fetchAllPokemons();
   document.querySelector(".loading").style.display = "none";
+  document.querySelector(".morePokemons").style.display = "block";
   const tempCreatedCards = createdCards;
   for (let i = createdCards; i < num + tempCreatedCards; i++) {
     if (createdCards < 898) {
