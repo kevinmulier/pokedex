@@ -316,9 +316,24 @@ footer a:any-link {
 /*******************************************/
 
 @media (max-width: 580px) {
+  main {
+    padding: 20px 10px;
+  }
+
   .pokemonCardMini {
-    width: 30vw;
-    height: 30vw;
+    width: 23vw;
+    height: 23vw;
+    margin-bottom: 10px;
+  }
+
+  .cardsSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
   }
 }
 
@@ -328,7 +343,7 @@ footer a:any-link {
   }
 
   .pokemonCardMini .pokemonName {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     text-align: center;
   }
