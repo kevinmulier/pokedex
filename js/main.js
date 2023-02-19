@@ -57,53 +57,64 @@ class Pokemon {
 }
 
 const pokemonsFetched = [];
+let createdCards = 0;
 
-function fetchNewPokemon(num = 50) {
-  fetch(`https://pokebuildapi.fr/api/v1/pokemon/limit/${pokemonsFetched.length + num}`)
-    .then((response) => response.json())
-    .then((data) => {
-      for (let i = pokemonsFetched.length; i < pokemonsFetched.length + num; i++) {
-        const temp = data[i];
-        const pokemonID = data[i].pokedexId;
-        const pokemonThumbnail = data[i].image;
-        const pokemonName = data[i].name;
-        const pokemonType1 = data[i].apiTypes[0].name;
-        let pokemonType2;
-        if (data[i].apiTypes[1] !== undefined && data[i].apiTypes[1] !== null) {
-          pokemonType2 = data[i].apiTypes[1].name;
-        } else {
-          pokemonType2 = "NA";
-        }
-        const pokemonHP = data[i].stats.HP;
-        const pokemonAttack = data[i].stats.attack;
-        const pokemonDefense = data[i].stats.defense;
-        const pokemonSpecialAttack = data[i].stats.special_attack;
-        const pokemonSpecialDefense = data[i].stats.special_defense;
-        const pokemonSpeed = data[i].stats.speed;
-        const pokemonEvolutions = data[i].apiEvolutions;
-        const pokemonPreEvolutions = data[i].apiPreEvolution;
-        window[pokemonName.toLowerCase()] = new Pokemon(
-          pokemonID,
-          pokemonThumbnail,
-          pokemonName,
-          pokemonType1,
-          pokemonType2,
-          pokemonHP,
-          pokemonAttack,
-          pokemonDefense,
-          pokemonSpecialAttack,
-          pokemonSpecialDefense,
-          pokemonSpeed,
-          pokemonEvolutions,
-          pokemonPreEvolutions
-        );
-        window[pokemonName.toLowerCase()].createMiniCard();
-        pokemonsFetched.push(window[pokemonName.toLowerCase()]);
-      }
-    })
-    .catch((err) => {
-      console.log(`error ${err}`);
-    });
+async function fetchAllPokemons() {
+  if (pokemonsFetched.length > 0) {
+    return true;
+  }
+  const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon");
+  const data = await response.json();
+  for (let i = 0; i < 898; i++) {
+    const temp = data[i];
+    const pokemonID = data[i].pokedexId;
+    const pokemonThumbnail = data[i].image;
+    const pokemonName = data[i].name;
+    const pokemonType1 = data[i].apiTypes[0].name;
+    let pokemonType2;
+    if (data[i].apiTypes[1] !== undefined && data[i].apiTypes[1] !== null) {
+      pokemonType2 = data[i].apiTypes[1].name;
+    } else {
+      pokemonType2 = "NA";
+    }
+    const pokemonHP = data[i].stats.HP;
+    const pokemonAttack = data[i].stats.attack;
+    const pokemonDefense = data[i].stats.defense;
+    const pokemonSpecialAttack = data[i].stats.special_attack;
+    const pokemonSpecialDefense = data[i].stats.special_defense;
+    const pokemonSpeed = data[i].stats.speed;
+    const pokemonEvolutions = data[i].apiEvolutions;
+    const pokemonPreEvolutions = data[i].apiPreEvolution;
+    window[pokemonName.toLowerCase()] = new Pokemon(
+      pokemonID,
+      pokemonThumbnail,
+      pokemonName,
+      pokemonType1,
+      pokemonType2,
+      pokemonHP,
+      pokemonAttack,
+      pokemonDefense,
+      pokemonSpecialAttack,
+      pokemonSpecialDefense,
+      pokemonSpeed,
+      pokemonEvolutions,
+      pokemonPreEvolutions
+    );
+    pokemonsFetched.push(window[pokemonName.toLowerCase()]);
+  }
 }
 
-fetchNewPokemon(50);
+async function addNewCards(num = 50) {
+  await fetchAllPokemons();
+  const tempCreatedCards = createdCards;
+  for (let i = createdCards; i < num + tempCreatedCards; i++) {
+    if (createdCards < 898) {
+      pokemonsFetched[i].createMiniCard();
+      createdCards++;
+    } else {
+      document.querySelector(".morePokemons").remove();
+    }
+  }
+}
+
+addNewCards(30);
