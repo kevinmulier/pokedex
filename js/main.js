@@ -38,7 +38,9 @@ class Pokemon {
     // Create the pokemon id element
     const newPokemonID = document.createElement("span");
     newPokemonID.classList.add("pokemonId");
-    newPokemonID.textContent = this.pokemonID;
+    let shownID;
+    this.pokemonID < 10 ? (shownID = `#00${this.pokemonID}`) : this.pokemonID < 100 ? (shownID = `#0${this.pokemonID}`) : (shownID = `#${this.pokemonID}`);
+    newPokemonID.textContent = shownID;
     newMiniCard.appendChild(newPokemonID);
     // Create the pokemon thumbnail element
     const newPokemonThumbnail = document.createElement("img");
