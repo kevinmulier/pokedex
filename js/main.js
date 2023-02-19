@@ -52,7 +52,7 @@ class Pokemon {
     newPokemonName.textContent = this.pokemonName;
     newMiniCard.appendChild(newPokemonName);
     // Add the card to the pokedex
-    document.querySelector("main").appendChild(newMiniCard);
+    document.querySelector(".cardsSection").appendChild(newMiniCard);
   }
 }
 
