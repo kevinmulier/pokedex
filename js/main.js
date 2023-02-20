@@ -31,7 +31,7 @@ class Pokemon {
 
   createMiniCard() {
     // Create the new card
-    const newMiniCard = document.createElement("section");
+    const newMiniCard = document.createElement("div");
     // Add classes and tab index to the card
     newMiniCard.classList.add("pokemonCardMini", this.pokemonType1.toLowerCase());
     newMiniCard.tabIndex = "0";
@@ -87,22 +87,23 @@ async function fetchAllPokemons() {
     const pokemonSpeed = data[i].stats.speed;
     const pokemonEvolutions = data[i].apiEvolutions;
     const pokemonPreEvolutions = data[i].apiPreEvolution;
-    window[pokemonName.toLowerCase()] = new Pokemon(
-      pokemonID,
-      pokemonThumbnail,
-      pokemonName,
-      pokemonType1,
-      pokemonType2,
-      pokemonHP,
-      pokemonAttack,
-      pokemonDefense,
-      pokemonSpecialAttack,
-      pokemonSpecialDefense,
-      pokemonSpeed,
-      pokemonEvolutions,
-      pokemonPreEvolutions
+    pokemonsFetched.push(
+      new Pokemon(
+        pokemonID,
+        pokemonThumbnail,
+        pokemonName,
+        pokemonType1,
+        pokemonType2,
+        pokemonHP,
+        pokemonAttack,
+        pokemonDefense,
+        pokemonSpecialAttack,
+        pokemonSpecialDefense,
+        pokemonSpeed,
+        pokemonEvolutions,
+        pokemonPreEvolutions
+      )
     );
-    pokemonsFetched.push(window[pokemonName.toLowerCase()]);
   }
 }
 
