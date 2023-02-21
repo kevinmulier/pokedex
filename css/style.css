@@ -160,6 +160,35 @@ main {
   z-index: 1;
 }
 
+.pokemonModal {
+  position: fixed;
+  left: calc(50% - 580px / 2);
+  top: 15%;
+  width: 580px;
+  padding: 30px 30px 5px;
+  border-radius: 20px;
+  background-color: orange;
+  z-index: 999;
+}
+
+.pokemonModal .topLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pokemonModal .topLineLeft {
+  display: flex;
+  align-items: center;
+}
+
+.pokemonModal .topLineLeft button {
+  margin-right: 20px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
 footer {
   max-width: 800px;
   margin: 0 auto 10px;
@@ -207,6 +236,16 @@ header h1 {
   font-size: 1.4rem;
   font-weight: bold;
   text-align: center;
+}
+
+.pokemonModal .topLine {
+  font-size: 2.5rem;
+  color: var(--grayscale-white);
+}
+
+.pokemonModal .topLineLeft button {
+  font-size: 2.5rem;
+  color: inherit;
 }
 
 footer p {
@@ -333,6 +372,15 @@ footer a:any-link {
   .pokemonCardMini .pokemonId {
     position: absolute;
     right: 9%;
+  }
+
+  .pokemonModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
   }
 }
 
