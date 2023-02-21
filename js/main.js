@@ -83,7 +83,7 @@ class Pokemon {
       bgModal.classList.add("hidden");
       modal.classList.remove(this.pokemonType1.toLowerCase());
     });
-    // Hide the modal when clicking outside of the modal
+    // Hide the modal when clicking outside of it
     document.addEventListener("mouseup", (e) => {
       if (!modal.contains(e.target)) {
         bgModal.classList.add("hidden");
@@ -105,13 +105,19 @@ const pokemonsFetched = [];
 let createdCards = 0;
 
 async function fetchAllPokemons() {
-  if (pokemonsFetched.length > 0) {
-    return true;
+  let data;
+  // If pokemons were already fetched and are in local storage, avoid new fetch
+  if (localStorage.getItem("pokemonsFetchedLocal")) {
+    data = JSON.parse(localStorage.getItem("pokemonsFetchedLocal"));
   }
-  const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon");
-  const data = await response.json();
+  // Else, fetch the pokemons and add them to local storage
+  else {
+    const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon");
+    data = await response.json();
+    localStorage.setItem("pokemonsFetchedLocal", JSON.stringify(data));
+  }
+  // Create new Pokemons
   for (let i = 0; i < 898; i++) {
-    const temp = data[i];
     const pokemonID = data[i].pokedexId;
     const pokemonThumbnail = data[i].image;
     const pokemonName = data[i].name;
@@ -151,11 +157,14 @@ async function fetchAllPokemons() {
 }
 
 async function addNewCards(num = 50) {
+  // Show a loading phase while awaiting for the fetching
   document.querySelector(".loading").style.display = "block";
   document.querySelector(".morePokemons").style.display = "none";
   await fetchAllPokemons();
+  // Hide the loading part and show the more card button once fetch is completed
   document.querySelector(".loading").style.display = "none";
   document.querySelector(".morePokemons").style.display = "block";
+  // Add new cards at the bottom of the pokedex
   const tempCreatedCards = createdCards;
   for (let i = createdCards; i < num + tempCreatedCards; i++) {
     if (createdCards < 898) {
