@@ -27,6 +27,13 @@ class Pokemon {
     this.pokemonSpeed = pokemonSpeed;
     this.pokemonEvolutions = pokemonEvolutions;
     this.pokemonPreEvolutions = pokemonPreEvolutions;
+    this.shownID = this.createShownID();
+  }
+
+  createShownID() {
+    let shownID;
+    this.pokemonID < 10 ? (shownID = `#00${this.pokemonID}`) : this.pokemonID < 100 ? (shownID = `#0${this.pokemonID}`) : (shownID = `#${this.pokemonID}`);
+    return shownID;
   }
 
   createMiniCard() {
@@ -38,9 +45,7 @@ class Pokemon {
     // Create the pokemon id element
     const newPokemonID = document.createElement("span");
     newPokemonID.classList.add("pokemonId");
-    let shownID;
-    this.pokemonID < 10 ? (shownID = `#00${this.pokemonID}`) : this.pokemonID < 100 ? (shownID = `#0${this.pokemonID}`) : (shownID = `#${this.pokemonID}`);
-    newPokemonID.textContent = shownID;
+    newPokemonID.textContent = this.shownID;
     newMiniCard.appendChild(newPokemonID);
     // Create the pokemon thumbnail element
     const newPokemonThumbnail = document.createElement("img");
@@ -55,6 +60,33 @@ class Pokemon {
     newMiniCard.appendChild(newPokemonName);
     // Add the card to the pokedex
     document.querySelector(".cardsSection").appendChild(newMiniCard);
+    // Add an event listener to open a modal on click
+    newMiniCard.addEventListener("click", this.createModal.bind(this));
+  }
+
+  createModal() {
+    // Create a new modal and add the type as background
+    const modal = document.createElement("section");
+    modal.classList.add("pokemonModal", this.pokemonType1.toLowerCase());
+    // Create a top line element with return button, Pokemon's name and ID
+    const topLine = document.createElement("div");
+    topLine.classList.add("topLine");
+    const topLineArrow = document.createElement("button");
+    topLineArrow.textContent = "<";
+    const topLinePokemonName = document.createElement("h4");
+    topLinePokemonName.textContent = this.pokemonName;
+    const topLinePokemonID = document.createElement("span");
+    topLinePokemonID.textContent = this.shownID;
+    const topLineLeft = document.createElement("div");
+    topLineLeft.classList.add("topLineLeft");
+    // Add the topline element and children
+    topLineLeft.appendChild(topLineArrow);
+    topLineLeft.appendChild(topLinePokemonName);
+    topLine.appendChild(topLineLeft);
+    topLine.appendChild(topLinePokemonID);
+    modal.appendChild(topLine);
+    // Add the modal to the body
+    document.querySelector("body").appendChild(modal);
   }
 }
 
