@@ -61,32 +61,43 @@ class Pokemon {
     // Add the card to the pokedex
     document.querySelector(".cardsSection").appendChild(newMiniCard);
     // Add an event listener to open a modal on click
-    newMiniCard.addEventListener("click", this.createModal.bind(this));
+    newMiniCard.addEventListener("click", this.showFilledModal.bind(this));
   }
 
-  createModal() {
-    // Create a new modal and add the type as background
-    const modal = document.createElement("section");
-    modal.classList.add("pokemonModal", this.pokemonType1.toLowerCase());
+  showFilledModal() {
+    // Declare and assign modal HTML elements
+    const bgModal = document.querySelector(".modalFilter");
+    const modal = document.querySelector(".pokemonModal");
+    const topLine = document.querySelector(".topLine");
+    const topLineLeft = document.querySelector(".topLineLeft");
+    const topLineArrow = document.querySelector(".topLineArrow");
+    const topLinePokemonName = document.querySelector(".topLinePokemonName");
+    const topLinePokemonID = document.querySelector(".topLinePokemonID");
+    // Add type class to the modal (background) and
+    modal.classList.add(this.pokemonType1.toLowerCase());
     // Create a top line element with return button, Pokemon's name and ID
-    const topLine = document.createElement("div");
-    topLine.classList.add("topLine");
-    const topLineArrow = document.createElement("button");
-    topLineArrow.textContent = "<";
-    const topLinePokemonName = document.createElement("h4");
     topLinePokemonName.textContent = this.pokemonName;
-    const topLinePokemonID = document.createElement("span");
     topLinePokemonID.textContent = this.shownID;
-    const topLineLeft = document.createElement("div");
-    topLineLeft.classList.add("topLineLeft");
+    // Hide the modal when clicking on the arrow button
+    topLineArrow.addEventListener("click", () => {
+      bgModal.classList.add("hidden");
+      modal.classList.remove(this.pokemonType1.toLowerCase());
+    });
+    // Hide the modal when clicking outside of the modal
+    document.addEventListener("mouseup", (e) => {
+      if (!modal.contains(e.target)) {
+        bgModal.classList.add("hidden");
+        modal.classList.remove(this.pokemonType1.toLowerCase());
+      }
+    });
     // Add the topline element and children
     topLineLeft.appendChild(topLineArrow);
     topLineLeft.appendChild(topLinePokemonName);
     topLine.appendChild(topLineLeft);
     topLine.appendChild(topLinePokemonID);
     modal.appendChild(topLine);
-    // Add the modal to the body
-    document.querySelector("body").appendChild(modal);
+    // Display the modal
+    bgModal.classList.remove("hidden");
   }
 }
 
