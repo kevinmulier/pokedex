@@ -54,7 +54,7 @@ class Pokemon {
     newPokemonThumbnail.alt = this.pokemonName;
     newMiniCard.appendChild(newPokemonThumbnail);
     // Create the pokemon name element
-    const newPokemonName = document.createElement("h3");
+    const newPokemonName = document.createElement("h2");
     newPokemonName.classList.add("pokemonName");
     newPokemonName.textContent = this.pokemonName;
     newMiniCard.appendChild(newPokemonName);
