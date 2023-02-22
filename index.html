@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="description" content="Pokédex avec affichage des stats - Kevin Mulier" />
-    <meta name="keywords" content="one, two, three" />
+    <meta name="keywords" content="Pokédex, Pokémon, Kevin Mulier" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex - par Kevin Mulier</title>
 
@@ -57,10 +57,36 @@
           <button class="rightArrow">&gt;</button>
         </div>
         <div class="modalInfos">
-          <div class="modalTypes">
+          <section class="modalTypes">
             <span class="modalType1"></span>
             <span class="modalType2"></span>
-          </div>
+          </section>
+          <section class="modalStats">
+            <section class="statsNames">
+              <span class="nameHP">HP</span>
+              <span class="nameATK">ATK</span>
+              <span class="nameDEF">DEF</span>
+              <span class="nameSATK">SATK</span>
+              <span class="nameSDEF">SDEF</span>
+              <span class="nameSPD">SPD</span>
+            </section>
+            <section class="statsValues">
+              <span class="valueHP"></span>
+              <span class="valueATK"></span>
+              <span class="valueDEF"></span>
+              <span class="valueSATK"></span>
+              <span class="valueSDEF"></span>
+              <span class="valueSPD"></span>
+            </section>
+            <section class="statsBars">
+              <progress value="" max="255" class="barHP"></progress>
+              <progress value="" max="255" class="barATK"></progress>
+              <progress value="" max="255" class="barDEF"></progress>
+              <progress value="" max="255" class="barSATK"></progress>
+              <progress value="" max="255" class="barSDEF"></progress>
+              <progress value="" max="255" class="barSPD"></progress>
+            </section>
+          </section>
         </div>
       </section>
     </div>
