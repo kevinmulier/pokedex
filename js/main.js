@@ -71,13 +71,25 @@ class Pokemon {
     const topLinePokemonName = document.querySelector(".topLinePokemonName");
     const topLinePokemonID = document.querySelector(".topLinePokemonID");
     const modalImage = document.querySelector(".modalImage");
+    const modalType1 = document.querySelector(".modalType1");
+    const modalType2 = document.querySelector(".modalType2");
     // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
     topLinePokemonID.textContent = this.shownID;
     modalImage.src = this.pokemonThumbnail;
     modalImage.alt = this.pokemonName;
+    modalType1.textContent = this.pokemonType1;
+    modalType2.textContent = this.pokemonType2;
     // Add type class to the modal (background)
     modal.classList.add(this.pokemonType1.toLowerCase());
+    // Add types to the modal
+    modalType1.classList.add(this.pokemonType1.toLowerCase());
+    if (this.pokemonType2 !== "NA") {
+      modalType2.classList.remove("hidden");
+      modalType2.classList.add(this.pokemonType2.toLowerCase());
+    } else {
+      modalType2.classList.add("hidden");
+    }
     // Remove arrows if necessary
     hideArrows(this.pokemonID - 1);
     // Display the modal
@@ -170,6 +182,9 @@ function hideModal() {
 // Remove type class from modal's background
 function removeTypeModal() {
   const modal = document.querySelector(".pokemonModal");
+  const modalType1 = document.querySelector(".modalType1");
+  const modalType2 = document.querySelector(".modalType2");
+
   const types = [
     "Normal",
     "Combat",
@@ -193,6 +208,8 @@ function removeTypeModal() {
 
   types.forEach((type) => {
     modal.classList.remove(type.toLowerCase());
+    modalType1.classList.remove(type.toLowerCase());
+    modalType2.classList.remove(type.toLowerCase());
   });
 }
 
@@ -233,6 +250,7 @@ document.querySelector(".rightArrow").addEventListener("click", () => {
   switchNextPokemon(pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent) + 1);
 });
 
+// Add new cards
 addNewCards(30);
 
 // Hide the modal when clicking on the close button
