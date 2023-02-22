@@ -122,16 +122,17 @@ main {
   border-radius: 15px;
   box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.2);
   background-color: var(--grayscale-white);
+  transition: border 50ms ease;
 }
 
 .pokemonCardMini::after {
   position: absolute;
   left: 0%;
-  top: 61%;
+  top: 60%;
   content: "";
   width: 100%;
   height: 40%;
-  border-radius: 15px;
+  border-radius: 14px;
   background-color: var(--grayscale-light);
 }
 
@@ -198,6 +199,22 @@ main {
   cursor: pointer;
 }
 
+.pokemonModal .modalMiddleDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemonModal .modalImage {
+  max-width: 60%;
+  margin: 0 10%;
+}
+
+.pokemonModal .modalMiddleDiv button {
+  border: none;
+  background-color: inherit;
+}
+
 footer {
   max-width: 800px;
   margin: 0 auto 10px;
@@ -255,6 +272,13 @@ header h1 {
 .pokemonModal .topLineLeft button {
   font-size: 4rem;
   color: inherit;
+  transition: color 0.4s ease;
+}
+
+.pokemonModal .modalMiddleDiv button {
+  font-size: 4rem;
+  color: var(--grayscale-white);
+  transition: color 0.4s ease;
 }
 
 footer p {
@@ -271,9 +295,33 @@ footer p {
 
 .searchBarSection input:focus-visible,
 .searchBarSection .sortByButton:focus-visible,
-.pokemonCardMini:focus-visible,
 .morePokemons:focus-visible {
   outline: 3px dashed black;
+}
+
+.pokemonCardMini:focus-visible {
+  border: 3px solid black;
+  outline: 0 dashed black;
+}
+
+.pokemonCardMini:focus-visible::after {
+  border-radius: 12px;
+}
+/* Hover */
+
+.pokemonCardMini:hover {
+  border: 3px solid black;
+  cursor: pointer;
+}
+
+.pokemonCardMini:hover::after {
+  border-radius: 12px;
+}
+
+.pokemonModal .topLineLeft button:hover,
+.pokemonModal .modalMiddleDiv button:hover {
+  color: var(--grayscale-dark);
+  cursor: pointer;
 }
 
 /* Links */
@@ -379,8 +427,15 @@ footer a:any-link {
   }
 
   .pokemonCardMini .pokemonId {
+    font-size: 0.9rem;
     position: absolute;
     right: 9%;
+  }
+
+  .pokemonCardMini .pokemonName {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
   }
 
   .pokemonModal {
