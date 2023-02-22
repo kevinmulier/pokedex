@@ -115,7 +115,9 @@ async function fetchAllPokemons() {
   // Create new Pokemons
   for (let i = 0; i < 898; i++) {
     const pokemonID = data[i].pokedexId;
-    const pokemonThumbnail = data[i].image;
+    let shownID;
+    pokemonID < 10 ? (shownID = `00${pokemonID}`) : pokemonID < 100 ? (shownID = `0${pokemonID}`) : (shownID = `${pokemonID}`);
+    const pokemonThumbnail = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${shownID}.png`;
     const pokemonName = data[i].name;
     const pokemonType1 = data[i].apiTypes[0].name;
     let pokemonType2;
