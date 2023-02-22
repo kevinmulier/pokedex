@@ -254,6 +254,61 @@ main {
   border-radius: 30px;
 }
 
+.pokemonModal .modalStats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pokemonModal .statsHP,
+.pokemonModal .statsATK,
+.pokemonModal .statsDEF,
+.pokemonModal .statsSATK,
+.pokemonModal .statsSDEF,
+.pokemonModal .statsSPD {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 2rem;
+}
+
+.pokemonModal .nameHP,
+.pokemonModal .nameATK,
+.pokemonModal .nameDEF,
+.pokemonModal .nameSATK,
+.pokemonModal .nameSDEF,
+.pokemonModal .nameSPD {
+  flex-basis: 10%;
+  border-right: 1px solid var(--grayscale-medium);
+}
+
+.pokemonModal .valueHP,
+.pokemonModal .valueATK,
+.pokemonModal .valueDEF,
+.pokemonModal .valueSATK,
+.pokemonModal .valueSDEF,
+.pokemonModal .valueSPD {
+  flex-basis: 15%;
+}
+
+.pokemonModal .barHP,
+.pokemonModal .barATK,
+.pokemonModal .barDEF,
+.pokemonModal .barSATK,
+.pokemonModal .barSDEF,
+.pokemonModal .barSPD {
+  flex: 1 0 70%;
+}
+
+.pokemonModal .barHP progress,
+.pokemonModal .barATK progress,
+.pokemonModal .barDEF progress,
+.pokemonModal .barSATK progress,
+.pokemonModal .barSDEF progress,
+.pokemonModal .barSPD progress {
+  width: 100%;
+}
+
 footer {
   max-width: 800px;
   margin: 0 auto 10px;
@@ -327,6 +382,25 @@ header h1 {
 
 .pokemonModal .modalType1,
 .pokemonModal .modalType2 {
+  text-align: center;
+}
+
+.pokemonModal .nameHP,
+.pokemonModal .nameATK,
+.pokemonModal .nameDEF,
+.pokemonModal .nameSATK,
+.pokemonModal .nameSDEF,
+.pokemonModal .nameSPD {
+  font-size: 1.5rem;
+}
+
+.pokemonModal .valueHP,
+.pokemonModal .valueATK,
+.pokemonModal .valueDEF,
+.pokemonModal .valueSATK,
+.pokemonModal .valueSDEF,
+.pokemonModal .valueSPD {
+  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -495,6 +569,45 @@ footer a:any-link {
     height: 100vh;
     border-radius: 0;
   }
+
+  .pokemonModal .nameHP,
+  .pokemonModal .nameATK,
+  .pokemonModal .nameDEF,
+  .pokemonModal .nameSATK,
+  .pokemonModal .nameSDEF,
+  .pokemonModal .nameSPD {
+    font-size: 1.2rem;
+    flex-basis: 12%;
+  }
+
+  .pokemonModal .valueHP,
+  .pokemonModal .valueATK,
+  .pokemonModal .valueDEF,
+  .pokemonModal .valueSATK,
+  .pokemonModal .valueSDEF,
+  .pokemonModal .valueSPD {
+    font-size: 1.2rem;
+    flex-basis: 15%;
+  }
+
+  .pokemonModal .barHP,
+  .pokemonModal .barATK,
+  .pokemonModal .barDEF,
+  .pokemonModal .barSATK,
+  .pokemonModal .barSDEF,
+  .pokemonModal .barSPD {
+    flex-basis: 64%;
+  }
+
+  .pokemonModal .barHP progress,
+  .pokemonModal .barATK progress,
+  .pokemonModal .barDEF progress,
+  .pokemonModal .barSATK progress,
+  .pokemonModal .barSDEF progress,
+  .pokemonModal .barSPD progress {
+    width: 100%;
+    padding-right: 30px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -510,6 +623,35 @@ footer a:any-link {
 
   .pokemonModal .topLine {
     font-size: 2rem;
+  }
+
+  .pokemonModal .nameHP,
+  .pokemonModal .nameATK,
+  .pokemonModal .nameDEF,
+  .pokemonModal .nameSATK,
+  .pokemonModal .nameSDEF,
+  .pokemonModal .nameSPD {
+    font-size: 1.2rem;
+    flex-basis: 20%;
+  }
+
+  .pokemonModal .valueHP,
+  .pokemonModal .valueATK,
+  .pokemonModal .valueDEF,
+  .pokemonModal .valueSATK,
+  .pokemonModal .valueSDEF,
+  .pokemonModal .valueSPD {
+    font-size: 1.2rem;
+    flex-basis: 25%;
+  }
+
+  .pokemonModal .barHP,
+  .pokemonModal .barATK,
+  .pokemonModal .barDEF,
+  .pokemonModal .barSATK,
+  .pokemonModal .barSDEF,
+  .pokemonModal .barSPD {
+    flex-basis: 50%;
   }
 }
 
