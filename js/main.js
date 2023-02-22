@@ -71,13 +71,13 @@ class Pokemon {
     const topLinePokemonName = document.querySelector(".topLinePokemonName");
     const topLinePokemonID = document.querySelector(".topLinePokemonID");
     const modalImage = document.querySelector(".modalImage");
-    // Add type class to the modal (background)
-    modal.classList.add(this.pokemonType1.toLowerCase());
     // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
     topLinePokemonID.textContent = this.shownID;
     modalImage.src = this.pokemonThumbnail;
     modalImage.alt = this.pokemonName;
+    // Add type class to the modal (background)
+    modal.classList.add(this.pokemonType1.toLowerCase());
     // Remove arrows if necessary
     hideArrows(this.pokemonID - 1);
     // Display the modal
@@ -196,7 +196,7 @@ function removeTypeModal() {
   });
 }
 
-// Switch to previous or next pokemon when click on arrows
+// Switch to previous or next pokemon when click on arrows. If card doesn't exit, add it
 function switchPreviousPokemon(pokemonID) {
   removeTypeModal();
   pokemonsFetched[pokemonID].showFilledModal();
@@ -207,6 +207,7 @@ function switchNextPokemon(pokemonID) {
   pokemonsFetched[pokemonID].showFilledModal();
   hideArrows(pokemonID);
 }
+
 // Hide arrows for switching pokemon if necessary
 function hideArrows(pokemonID) {
   if (pokemonID === 0) {
