@@ -68,34 +68,54 @@ class Pokemon {
     // Declare and assign modal HTML elements
     const bgModal = document.querySelector(".modalFilter");
     const modal = document.querySelector(".pokemonModal");
-    const topLine = document.querySelector(".topLine");
-    const topLineLeft = document.querySelector(".topLineLeft");
     const topLineArrow = document.querySelector(".topLineArrow");
     const topLinePokemonName = document.querySelector(".topLinePokemonName");
     const topLinePokemonID = document.querySelector(".topLinePokemonID");
-    // Add type class to the modal (background) and
+    const leftArrow = document.querySelector(".leftArrow");
+    const rightArrow = document.querySelector(".rightArrow");
+    const modalImage = document.querySelector(".modalImage");
+    // Add type class to the modal (background)
     modal.classList.add(this.pokemonType1.toLowerCase());
-    // Create a top line element with return button, Pokemon's name and ID
+    // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
     topLinePokemonID.textContent = this.shownID;
+    modalImage.src = this.pokemonThumbnail;
+    modalImage.alt = this.pokemonName;
+    // Display arrow if previous or next pokemon
+    if (this.pokemonID == 1) {
+      leftArrow.classList.add("hidden");
+    } else if (this.pokemonID == 898) {
+      rightArrow.classList.add("hidden");
+    }
     // Hide the modal when clicking on the arrow button
     topLineArrow.addEventListener("click", () => {
       bgModal.classList.add("hidden");
       modal.classList.remove(this.pokemonType1.toLowerCase());
+      leftArrow.classList.remove("hidden");
+      rightArrow.classList.remove("hidden");
     });
     // Hide the modal when clicking outside of it
     document.addEventListener("mouseup", (e) => {
       if (!modal.contains(e.target)) {
         bgModal.classList.add("hidden");
         modal.classList.remove(this.pokemonType1.toLowerCase());
+        leftArrow.classList.remove("hidden");
+        rightArrow.classList.remove("hidden");
       }
     });
-    // Add the topline element and children
-    topLineLeft.appendChild(topLineArrow);
-    topLineLeft.appendChild(topLinePokemonName);
-    topLine.appendChild(topLineLeft);
-    topLine.appendChild(topLinePokemonID);
-    modal.appendChild(topLine);
+    // Switch to previous or next pokemon when click on arrows
+    leftArrow.addEventListener("click", () => {
+      leftArrow.classList.remove("hidden");
+      rightArrow.classList.remove("hidden");
+      modal.classList.remove(this.pokemonType1.toLowerCase());
+      pokemonsFetched[this.pokemonID - 2].showFilledModal();
+    });
+    rightArrow.addEventListener("click", () => {
+      leftArrow.classList.remove("hidden");
+      rightArrow.classList.remove("hidden");
+      modal.classList.remove(this.pokemonType1.toLowerCase());
+      pokemonsFetched[this.pokemonID].showFilledModal();
+    });
     // Display the modal
     bgModal.classList.remove("hidden");
   }
