@@ -68,11 +68,8 @@ class Pokemon {
     // Declare and assign modal HTML elements
     const bgModal = document.querySelector(".modalFilter");
     const modal = document.querySelector(".pokemonModal");
-    const topLineArrow = document.querySelector(".topLineArrow");
     const topLinePokemonName = document.querySelector(".topLinePokemonName");
     const topLinePokemonID = document.querySelector(".topLinePokemonID");
-    const leftArrow = document.querySelector(".leftArrow");
-    const rightArrow = document.querySelector(".rightArrow");
     const modalImage = document.querySelector(".modalImage");
     // Add type class to the modal (background)
     modal.classList.add(this.pokemonType1.toLowerCase());
@@ -81,41 +78,8 @@ class Pokemon {
     topLinePokemonID.textContent = this.shownID;
     modalImage.src = this.pokemonThumbnail;
     modalImage.alt = this.pokemonName;
-    // Display arrow if previous or next pokemon
-    if (this.pokemonID == 1) {
-      leftArrow.classList.add("hidden");
-    } else if (this.pokemonID == 898) {
-      rightArrow.classList.add("hidden");
-    }
-    // Hide the modal when clicking on the arrow button
-    topLineArrow.addEventListener("click", () => {
-      bgModal.classList.add("hidden");
-      modal.classList.remove(this.pokemonType1.toLowerCase());
-      leftArrow.classList.remove("hidden");
-      rightArrow.classList.remove("hidden");
-    });
-    // Hide the modal when clicking outside of it
-    document.addEventListener("mouseup", (e) => {
-      if (!modal.contains(e.target)) {
-        bgModal.classList.add("hidden");
-        modal.classList.remove(this.pokemonType1.toLowerCase());
-        leftArrow.classList.remove("hidden");
-        rightArrow.classList.remove("hidden");
-      }
-    });
-    // Switch to previous or next pokemon when click on arrows
-    leftArrow.addEventListener("click", () => {
-      leftArrow.classList.remove("hidden");
-      rightArrow.classList.remove("hidden");
-      modal.classList.remove(this.pokemonType1.toLowerCase());
-      pokemonsFetched[this.pokemonID - 2].showFilledModal();
-    });
-    rightArrow.addEventListener("click", () => {
-      leftArrow.classList.remove("hidden");
-      rightArrow.classList.remove("hidden");
-      modal.classList.remove(this.pokemonType1.toLowerCase());
-      pokemonsFetched[this.pokemonID].showFilledModal();
-    });
+    // Remove arrows if necessary
+    hideArrows(this.pokemonID - 1);
     // Display the modal
     bgModal.classList.remove("hidden");
   }
@@ -196,4 +160,86 @@ async function addNewCards(num = 50) {
   }
 }
 
+function hideModal() {
+  // Hide modal
+  const bgModal = document.querySelector(".modalFilter");
+  bgModal.classList.add("hidden");
+  removeTypeModal();
+}
+
+// Remove type class from modal's background
+function removeTypeModal() {
+  const modal = document.querySelector(".pokemonModal");
+  const types = [
+    "Normal",
+    "Combat",
+    "Vol",
+    "Poison",
+    "Sol",
+    "Roche",
+    "Insecte",
+    "Spectre",
+    "Acier",
+    "Feu",
+    "Eau",
+    "Plante",
+    "Électrik",
+    "Psy",
+    "Glace",
+    "Dragon",
+    "Ténèbres",
+    "Fée",
+  ];
+
+  types.forEach((type) => {
+    modal.classList.remove(type.toLowerCase());
+  });
+}
+
+// Switch to previous or next pokemon when click on arrows
+function switchPreviousPokemon(pokemonID) {
+  removeTypeModal();
+  pokemonsFetched[pokemonID].showFilledModal();
+  hideArrows(pokemonID);
+}
+function switchNextPokemon(pokemonID) {
+  removeTypeModal();
+  pokemonsFetched[pokemonID].showFilledModal();
+  hideArrows(pokemonID);
+}
+// Hide arrows for switching pokemon if necessary
+function hideArrows(pokemonID) {
+  if (pokemonID === 0) {
+    document.querySelector(".leftArrow").classList.add("hidden");
+    document.querySelector(".rightArrow").classList.remove("hidden");
+  } else if (pokemonID === 897) {
+    document.querySelector(".rightArrow").classList.add("hidden");
+    document.querySelector(".leftArrow").classList.remove("hidden");
+  } else {
+    document.querySelector(".leftArrow").classList.remove("hidden");
+    document.querySelector(".rightArrow").classList.remove("hidden");
+  }
+}
+
+// Switch to previous or next pokemon when click on arrows
+document.querySelector(".leftArrow").addEventListener("click", () => {
+  removeTypeModal();
+  switchPreviousPokemon(pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent) - 1);
+});
+
+document.querySelector(".rightArrow").addEventListener("click", () => {
+  removeTypeModal();
+  switchNextPokemon(pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent) + 1);
+});
+
 addNewCards(30);
+
+// Hide the modal when clicking on the close button
+document.querySelector(".topLineArrow").addEventListener("click", hideModal);
+// Hide the modal when clicking outside of it
+document.addEventListener("mouseup", (e) => {
+  const modal = document.querySelector(".pokemonModal");
+  if (!modal.contains(e.target)) {
+    hideModal();
+  }
+});
