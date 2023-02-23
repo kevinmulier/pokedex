@@ -40,7 +40,14 @@ class Pokemon {
     // Create the new card
     const newMiniCard = document.createElement("div");
     // Add classes and tab index to the card
-    newMiniCard.classList.add("pokemonCardMini", this.pokemonType1.toLowerCase());
+    if (this.pokemonType2 !== "NA") {
+      let type1Color = typesColors[this.pokemonType1];
+      let type2Color = typesColors[this.pokemonType2];
+      newMiniCard.style.background = `linear-gradient(120deg, ${type1Color} 0%, ${type2Color} 100%)`;
+      newMiniCard.classList.add("pokemonCardMini");
+    } else {
+      newMiniCard.classList.add("pokemonCardMini", this.pokemonType1.toLowerCase());
+    }
     newMiniCard.tabIndex = "0";
     // Create the pokemon id element
     const newPokemonID = document.createElement("span");
@@ -80,9 +87,15 @@ class Pokemon {
     modalImage.alt = this.pokemonName;
     modalType1.textContent = this.pokemonType1;
     modalType2.textContent = this.pokemonType2;
-    // Add type class to the modal (background)
-    modal.classList.add(this.pokemonType1.toLowerCase());
-    // Add types to the modal
+    // Add type(s) to the modal (background)
+    if (this.pokemonType2 !== "NA") {
+      let type1Color = typesColors[this.pokemonType1];
+      let type2Color = typesColors[this.pokemonType2];
+      modal.style.background = `linear-gradient(90deg, ${type1Color} 0%, ${type2Color} 100%)`;
+    } else {
+      modal.classList.add(this.pokemonType1.toLowerCase());
+    }
+    // Add types to the modal (infos)
     modalType1.classList.add(this.pokemonType1.toLowerCase());
     if (this.pokemonType2 !== "NA") {
       modalType2.classList.remove("hidden");
@@ -99,6 +112,26 @@ class Pokemon {
 
 const pokemonsFetched = [];
 let createdCards = 0;
+const typesColors = {
+  Normal: "#aaa67f",
+  Combat: "#c12239",
+  Vol: "#a891ec",
+  Poison: "#a43e9e",
+  Sol: "#dec16b",
+  Roche: "#b69e31",
+  Insecte: "#a7b723",
+  Spectre: "#70559b",
+  Acier: "#b7b9d0",
+  Feu: "#f57d31",
+  Eau: "#6493eb",
+  Plante: "#74cb48",
+  Électrik: "#f9cf30",
+  Psy: "#fb5584",
+  Glace: "#9ad6df",
+  Dragon: "#7037ff",
+  Ténèbres: "#75574c",
+  Fée: "#e69eac",
+};
 
 async function fetchAllPokemons() {
   let data;
@@ -213,6 +246,7 @@ function removeTypeModal() {
     modalType1.classList.remove(type.toLowerCase());
     modalType2.classList.remove(type.toLowerCase());
   });
+  modal.style.background = null;
 }
 
 // Switch to previous or next pokemon when click on arrows. If card doesn't exit, add it
