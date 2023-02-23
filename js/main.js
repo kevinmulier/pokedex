@@ -93,6 +93,9 @@ class Pokemon {
     const modalBarSATK = document.querySelector(".barSATK");
     const modalBarSDEF = document.querySelector(".barSDEF");
     const modalBarSPD = document.querySelector(".barSPD");
+    const modalPreEvoTitle = document.querySelector(".preEvoTitle");
+    const modalPreEvo = document.querySelector(".preEvoSection");
+    const modalPostEvo = document.querySelector(".postEvoSection");
     let type1Color = typesColors[this.pokemonType1];
     let type2Color = typesColors[this.pokemonType2];
     // Modify text, src and attribute contents
@@ -135,6 +138,55 @@ class Pokemon {
     modalBarSATK.style.accentColor = type1Color;
     modalBarSDEF.style.accentColor = type1Color;
     modalBarSPD.style.accentColor = type1Color;
+    // Add evolutions
+    modalPreEvo.classList.add("hidden");
+    modalPreEvoTitle.classList.add("hidden");
+    modalPostEvo.classList.add("hidden");
+    while (modalPostEvo.firstChild) {
+      modalPostEvo.removeChild(modalPostEvo.firstChild);
+    }
+
+    if (this.pokemonPreEvolutions !== "none") {
+      document.querySelector(".preEvoThumbnail").src = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonThumbnail;
+      document.querySelector(".preEvoThumbnail").alt = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
+      document.querySelector(".preEvoName").textContent = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
+      document.querySelector(".preEvoName").addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      document.querySelector(".preEvoThumbnail").addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      modalPreEvoTitle.classList.remove("hidden");
+      modalPreEvo.classList.remove("hidden");
+    }
+
+    if (this.pokemonEvolutions.length !== 0) {
+      const title = document.createElement("h5");
+      title.classList.add("postEvoTitle");
+      if (this.pokemonEvolutions.length > 1) {
+        title.textContent = "Évolutions";
+      } else {
+        title.textContent = "Évolution";
+      }
+      modalPostEvo.appendChild(title);
+      const section = document.createElement("section");
+      section.classList.add("postEvo");
+      for (let evolution of this.pokemonEvolutions) {
+        const thumbnail = document.createElement("img");
+        thumbnail.classList.add("postEvoThumbnail");
+        thumbnail.src = pokemonsFetched[evolution.pokedexId - 1].pokemonThumbnail;
+        thumbnail.alt = pokemonsFetched[evolution.pokedexId - 1].pokemonName;
+        thumbnail.addEventListener("click", () => switchEvo(evolution.pokedexId - 1));
+        const name = document.createElement("span");
+        name.classList.add("postEvoName");
+        name.textContent = pokemonsFetched[evolution.pokedexId - 1].pokemonName;
+        name.addEventListener("click", () => switchEvo(evolution.pokedexId - 1));
+        const subSection = document.createElement("section");
+        subSection.classList.add("postEvoSub");
+        subSection.appendChild(thumbnail);
+        subSection.appendChild(name);
+        section.appendChild(subSection);
+      }
+      modalPostEvo.appendChild(section);
+      modalPostEvo.classList.remove("hidden");
+    }
+
     // Remove arrows if necessary
     hideArrows(this.pokemonID - 1);
     // Display the modal
@@ -283,7 +335,7 @@ function removeTypeModal() {
   modal.style.background = null;
 }
 
-// Switch to previous or next pokemon when click on arrows. If card doesn't exit, add it
+// Switch to previous or next pokemon when click on arrows
 function switchPreviousPokemon(pokemonID) {
   removeTypeModal();
   pokemonsFetched[pokemonID].showFilledModal();
@@ -307,6 +359,13 @@ function hideArrows(pokemonID) {
     document.querySelector(".leftArrow").classList.remove("hidden");
     document.querySelector(".rightArrow").classList.remove("hidden");
   }
+}
+
+// Switch to pre-evo/evo when clicking on it
+function switchEvo(pokemonEvo) {
+  removeTypeModal();
+  pokemonsFetched[pokemonEvo].showFilledModal();
+  hideArrows(pokemonEvo);
 }
 
 // Research Pokemon
