@@ -261,6 +261,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .pokemonModal .baseStats {
@@ -314,6 +315,35 @@ main {
 .pokemonModal .barSDEF progress,
 .pokemonModal .barSPD progress {
   width: 100%;
+}
+
+.pokemonModal .modalEvo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemonModal .preEvoSection,
+.pokemonModal .postEvo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemonModal .preEvo,
+.pokemonModal .postEvoSection,
+.pokemonModal .postEvoSub {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pokemonModal .preEvoThumbnail,
+.pokemonModal .postEvoThumbnail {
+  max-width: 100px;
 }
 
 footer {
@@ -413,6 +443,10 @@ main .loading {
 .pokemonModal .valueSDEF,
 .pokemonModal .valueSPD {
   font-size: 1.5rem;
+  text-align: center;
+}
+
+.pokemonModal .modalEvo {
   text-align: center;
 }
 
@@ -672,5 +706,5 @@ footer a:any-link {
 /*******************************************/
 
 .hidden {
-  display: none;
+  display: none !important;
 }
