@@ -338,7 +338,7 @@ header h1 {
   color: var(--primary-color);
 }
 
-.cardsSection .loading {
+main .loading {
   font-family: "Press Start 2P", cursive;
   font-size: 2.5rem;
   line-height: 5rem;
