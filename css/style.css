@@ -75,6 +75,11 @@ header img {
   background-position: 10px 50%;
 }
 
+.searchBarSection input::-webkit-search-cancel-button {
+  position: relative;
+  right: 20px;
+}
+
 .sortByButton {
   width: 40px;
   height: 40px;
