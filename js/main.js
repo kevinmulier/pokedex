@@ -80,6 +80,20 @@ class Pokemon {
     const modalImage = document.querySelector(".modalImage");
     const modalType1 = document.querySelector(".modalType1");
     const modalType2 = document.querySelector(".modalType2");
+    const modalValueHP = document.querySelector(".valueHP");
+    const modalValueATK = document.querySelector(".valueATK");
+    const modalValueDEF = document.querySelector(".valueDEF");
+    const modalValueSATK = document.querySelector(".valueSATK");
+    const modalValueSDEF = document.querySelector(".valueSDEF");
+    const modalValueSPD = document.querySelector(".valueSPD");
+    const modalBarHP = document.querySelector(".barHP");
+    const modalBarATK = document.querySelector(".barATK");
+    const modalBarDEF = document.querySelector(".barDEF");
+    const modalBarSATK = document.querySelector(".barSATK");
+    const modalBarSDEF = document.querySelector(".barSDEF");
+    const modalBarSPD = document.querySelector(".barSPD");
+    let type1Color = typesColors[this.pokemonType1];
+    let type2Color = typesColors[this.pokemonType2];
     // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
     topLinePokemonID.textContent = this.shownID;
@@ -87,10 +101,20 @@ class Pokemon {
     modalImage.alt = this.pokemonName;
     modalType1.textContent = this.pokemonType1;
     modalType2.textContent = this.pokemonType2;
+    modalValueHP.textContent = this.pokemonHP;
+    modalValueATK.textContent = this.pokemonAttack;
+    modalValueDEF.textContent = this.pokemonDefense;
+    modalValueSATK.textContent = this.pokemonSpecialAttack;
+    modalValueSDEF.textContent = this.pokemonSpecialDefense;
+    modalValueSPD.textContent = this.pokemonSpeed;
+    modalBarHP.value = this.pokemonHP;
+    modalBarATK.value = this.pokemonAttack;
+    modalBarDEF.value = this.pokemonDefense;
+    modalBarSATK.value = this.pokemonSpecialAttack;
+    modalBarSDEF.value = this.pokemonSpecialDefense;
+    modalBarSPD.value = this.pokemonSpeed;
     // Add type(s) to the modal (background)
     if (this.pokemonType2 !== "NA") {
-      let type1Color = typesColors[this.pokemonType1];
-      let type2Color = typesColors[this.pokemonType2];
       modal.style.background = `linear-gradient(90deg, ${type1Color} 0%, ${type2Color} 100%)`;
     } else {
       modal.classList.add(this.pokemonType1.toLowerCase());
