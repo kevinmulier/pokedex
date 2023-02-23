@@ -59,6 +59,7 @@ class Pokemon {
     newPokemonThumbnail.classList.add("pokemonThumbnail");
     newPokemonThumbnail.src = this.pokemonThumbnail;
     newPokemonThumbnail.alt = this.pokemonName;
+    newPokemonThumbnail.loading = "lazy";
     newMiniCard.appendChild(newPokemonThumbnail);
     // Create the pokemon name element
     const newPokemonName = document.createElement("h2");
@@ -372,4 +373,6 @@ document.querySelector(".morePokemons").addEventListener("click", () => {
 });
 
 // Add event listener for search bar
-document.querySelector(".searchBar").addEventListener("input", () => searchPokemon(document.querySelector(".searchBar").value));
+document.querySelector(".searchBar").addEventListener("input", () => {
+  searchPokemon(document.querySelector(".searchBar").value);
+});
