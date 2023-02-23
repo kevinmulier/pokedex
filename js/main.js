@@ -198,23 +198,25 @@ async function fetchAllPokemons() {
     const pokemonSpeed = data[i].stats.speed;
     const pokemonEvolutions = data[i].apiEvolutions;
     const pokemonPreEvolutions = data[i].apiPreEvolution;
-    pokemonsFetched.push(
-      new Pokemon(
-        pokemonID,
-        pokemonThumbnail,
-        pokemonName,
-        pokemonType1,
-        pokemonType2,
-        pokemonHP,
-        pokemonAttack,
-        pokemonDefense,
-        pokemonSpecialAttack,
-        pokemonSpecialDefense,
-        pokemonSpeed,
-        pokemonEvolutions,
-        pokemonPreEvolutions
-      )
-    );
+    if (pokemonsFetched.length < 898) {
+      pokemonsFetched.push(
+        new Pokemon(
+          pokemonID,
+          pokemonThumbnail,
+          pokemonName,
+          pokemonType1,
+          pokemonType2,
+          pokemonHP,
+          pokemonAttack,
+          pokemonDefense,
+          pokemonSpecialAttack,
+          pokemonSpecialDefense,
+          pokemonSpeed,
+          pokemonEvolutions,
+          pokemonPreEvolutions
+        )
+      );
+    }
   }
 }
 
@@ -306,6 +308,40 @@ function hideArrows(pokemonID) {
   }
 }
 
+// Research Pokemon
+function searchPokemon(searchInput) {
+  if (searchInput === "") {
+    removeAllCards();
+    createdCards = 0;
+    addNewCards(100);
+    document.querySelector(".morePokemons").style.display = "block";
+  } else {
+    removeAllCards();
+    for (let i = 0; i < pokemonsFetched.length; i++) {
+      if (pokemonsFetched[i].pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || pokemonsFetched[i].pokemonID.toString().includes(searchInput)) {
+        pokemonsFetched[i].createMiniCard();
+      }
+    }
+    document.querySelector(".morePokemons").style.display = "none";
+  }
+}
+
+// Remove all minicards
+function removeAllCards() {
+  while (document.querySelector(".cardsSection").firstChild) {
+    document.querySelector(".cardsSection").removeChild(document.querySelector(".cardsSection").lastChild);
+  }
+}
+
+// Hide "More Pokemons" button
+function hideMorePokemons() {
+  document.querySelector(".morePokemons").style.display = "none";
+}
+// Show "More Pokemons" button
+function hideMorePokemons() {
+  document.querySelector(".morePokemons").style.display = "block";
+}
+
 // Switch to previous or next pokemon when click on arrows
 document.querySelector(".leftArrow").addEventListener("click", () => {
   removeTypeModal();
@@ -329,3 +365,11 @@ document.addEventListener("mouseup", (e) => {
     hideModal();
   }
 });
+
+// Add event listener to create new cards
+document.querySelector(".morePokemons").addEventListener("click", () => {
+  addNewCards(50);
+});
+
+// Add event listener for search bar
+document.querySelector(".searchBar").addEventListener("input", () => searchPokemon(document.querySelector(".searchBar").value));
