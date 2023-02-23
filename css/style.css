@@ -178,9 +178,9 @@ main {
 .pokemonModal {
   position: fixed;
   left: calc(50% - 580px / 2);
-  top: 15%;
+  top: 5%;
   width: 580px;
-  padding: 30px;
+  padding: 10px 30px 10px;
   border-radius: 20px;
   box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.2);
 }
@@ -246,8 +246,8 @@ main {
   margin-bottom: 20px;
 }
 
-.pokemonModal .modalType1 {
-  margin-right: 20px;
+.pokemonModal .modalType2 {
+  margin-left: 20px;
 }
 
 .pokemonModal .modalType1,
@@ -322,9 +322,9 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
-.pokemonModal .preEvoSection,
 .pokemonModal .postEvo {
   display: flex;
   flex-wrap: wrap;
@@ -333,11 +333,13 @@ main {
 }
 
 .pokemonModal .preEvo,
+.pokemonModal .preEvoSection,
 .pokemonModal .postEvoSection,
 .pokemonModal .postEvoSub {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
@@ -448,6 +450,12 @@ main .loading {
 
 .pokemonModal .modalEvo {
   text-align: center;
+}
+
+.pokemonModal .preEvoTitle,
+.pokemonModal .postEvoTitle {
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 footer p {
@@ -579,6 +587,14 @@ footer a:any-link {
 /* MOBILE
 /*******************************************/
 
+@media (max-height: 820px) {
+  .pokemonModal .modalImage {
+    max-width: 30%;
+    margin: 0 10%;
+    z-index: 999;
+  }
+}
+
 @media (max-width: 580px) {
   main {
     padding: 20px 10px;
@@ -614,6 +630,29 @@ footer a:any-link {
     width: 100vw;
     height: 100vh;
     border-radius: 0;
+  }
+
+  .pokemonModal .modalImage {
+    max-width: 50%;
+    margin: 0 10%;
+    z-index: 999;
+  }
+
+  .pokemonModal .modalInfos::before {
+    top: -30px;
+    height: 30px;
+  }
+
+  .pokemonModal .modalTypes {
+    margin-bottom: 10px;
+  }
+
+  .pokemonModal .modalType1,
+  .pokemonModal .modalType2 {
+    font-size: 1.5rem;
+    width: 125px;
+    padding: 5px 0;
+    border-radius: 30px;
   }
 
   .pokemonModal .nameHP,
@@ -653,6 +692,11 @@ footer a:any-link {
   .pokemonModal .barSPD progress {
     width: 100%;
     padding-right: 30px;
+  }
+
+  .pokemonModal .preEvoThumbnail,
+  .pokemonModal .postEvoThumbnail {
+    max-width: 70px;
   }
 }
 
@@ -698,6 +742,56 @@ footer a:any-link {
   .pokemonModal .barSDEF,
   .pokemonModal .barSPD {
     flex-basis: 50%;
+  }
+}
+
+@media (max-width: 300px) {
+  .pokemonModal .topLine {
+    font-size: 1.2rem;
+  }
+
+  .pokemonModal .topLineLeft button {
+    font-size: 2rem;
+  }
+
+  .pokemonModal .modalImage {
+    max-width: 40%;
+    margin: 0 10%;
+    z-index: 999;
+  }
+
+  .pokemonModal .baseStats {
+    font-size: 1.2rem;
+  }
+
+  .pokemonModal .nameHP,
+  .pokemonModal .nameATK,
+  .pokemonModal .nameDEF,
+  .pokemonModal .nameSATK,
+  .pokemonModal .nameSDEF,
+  .pokemonModal .nameSPD {
+    font-size: 1rem;
+    flex-basis: 20%;
+  }
+
+  .pokemonModal .valueHP,
+  .pokemonModal .valueATK,
+  .pokemonModal .valueDEF,
+  .pokemonModal .valueSATK,
+  .pokemonModal .valueSDEF,
+  .pokemonModal .valueSPD {
+    font-size: 1rem;
+    flex-basis: 25%;
+  }
+
+  .pokemonModal .postEvoTitle,
+  .pokemonModal .preEvoTitle {
+    font-size: 1.2rem;
+  }
+
+  .pokemonModal .preEvoThumbnail,
+  .pokemonModal .postEvoThumbnail {
+    max-width: 60px;
   }
 }
 
