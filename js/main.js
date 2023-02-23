@@ -374,5 +374,7 @@ document.querySelector(".morePokemons").addEventListener("click", () => {
 
 // Add event listener for search bar
 document.querySelector(".searchBar").addEventListener("input", () => {
-  searchPokemon(document.querySelector(".searchBar").value);
+  if (document.querySelector(".searchBar").value.split("").length > 2 || document.querySelector(".searchBar").value === "") {
+    searchPokemon(document.querySelector(".searchBar").value);
+  }
 });
