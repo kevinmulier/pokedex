@@ -127,6 +127,13 @@ class Pokemon {
     } else {
       modalType2.classList.add("hidden");
     }
+    // Add color to the progress bars
+    modalBarHP.style.accentColor = type1Color;
+    modalBarATK.style.accentColor = type1Color;
+    modalBarDEF.style.accentColor = type1Color;
+    modalBarSATK.style.accentColor = type1Color;
+    modalBarSDEF.style.accentColor = type1Color;
+    modalBarSPD.style.accentColor = type1Color;
     // Remove arrows if necessary
     hideArrows(this.pokemonID - 1);
     // Display the modal
