@@ -260,6 +260,10 @@ main {
   justify-content: center;
 }
 
+.pokemonModal .baseStats {
+  margin-bottom: 20px;
+}
+
 .pokemonModal .statsHP,
 .pokemonModal .statsATK,
 .pokemonModal .statsDEF,
@@ -354,7 +358,6 @@ header h1 {
 
 .pokemonCardMini .pokemonName {
   font-size: 1.4rem;
-  font-weight: bold;
   text-align: center;
 }
 
@@ -382,6 +385,12 @@ header h1 {
 
 .pokemonModal .modalType1,
 .pokemonModal .modalType2 {
+  text-align: center;
+}
+
+.pokemonModal .baseStats {
+  font-size: 2rem;
+  font-weight: bold;
   text-align: center;
 }
 
