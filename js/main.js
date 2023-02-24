@@ -394,7 +394,10 @@ function searchPokemon(searchInput) {
   } else {
     removeAllCards();
     for (let i = 0; i < pokemonsFetched.length; i++) {
-      if (pokemonsFetched[i].pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || pokemonsFetched[i].pokemonID.toString().includes(searchInput)) {
+      if (
+        pokemonsFetched[i].pokemonName.toLowerCase().includes(searchInput.toLowerCase()) ||
+        pokemonsFetched[i].pokemonID.toString().includes(Number(searchInput))
+      ) {
         pokemonsFetched[i].createMiniCard();
       }
     }
