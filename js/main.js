@@ -138,24 +138,40 @@ class Pokemon {
     modalBarSATK.style.accentColor = type1Color;
     modalBarSDEF.style.accentColor = type1Color;
     modalBarSPD.style.accentColor = type1Color;
-    // Add evolutions
+
+    // Clean evolutions
     modalPreEvo.classList.add("hidden");
-    modalPreEvoTitle.classList.add("hidden");
+    while (modalPreEvo.firstChild) {
+      modalPreEvo.removeChild(modalPreEvo.firstChild);
+    }
     modalPostEvo.classList.add("hidden");
     while (modalPostEvo.firstChild) {
       modalPostEvo.removeChild(modalPostEvo.firstChild);
     }
 
+    // Add pre-Evolution
     if (this.pokemonPreEvolutions !== "none") {
-      document.querySelector(".preEvoThumbnail").src = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonThumbnail;
-      document.querySelector(".preEvoThumbnail").alt = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
-      document.querySelector(".preEvoName").textContent = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
-      document.querySelector(".preEvoName").addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
-      document.querySelector(".preEvoThumbnail").addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
-      modalPreEvoTitle.classList.remove("hidden");
+      const title = document.createElement("h5");
+      title.classList.add("preEvoTitle");
+      modalPreEvo.appendChild(title);
+      const section = document.createElement("section");
+      section.classList.add("preEvo");
+      const thumbnail = document.createElement("img");
+      thumbnail.classList.add("preEvoThumbnail");
+      thumbnail.src = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonThumbnail;
+      thumbnail.alt = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
+      thumbnail.addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      const name = document.createElement("span");
+      name.classList.add("preEvoName");
+      name.textContent = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
+      name.addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      section.appendChild(thumbnail);
+      section.appendChild(name);
+      modalPreEvo.appendChild(section);
       modalPreEvo.classList.remove("hidden");
     }
 
+    // Add evolutions
     if (this.pokemonEvolutions.length !== 0) {
       const title = document.createElement("h5");
       title.classList.add("postEvoTitle");
