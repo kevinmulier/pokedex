@@ -611,8 +611,8 @@ footer a:any-link {
   }
 
   .pokemonCardMini {
-    width: 23vw;
-    height: 23vw;
+    width: 21vw;
+    height: 21vw;
     margin-bottom: 10px;
   }
 
@@ -710,7 +710,13 @@ footer a:any-link {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 440px) {
+  .pokemonCardMini {
+    width: 19vw;
+    height: 19vw;
+    margin-bottom: 10px;
+  }
+
   .pokemonCardMini .pokemonId {
     font-size: 0.7rem;
   }
