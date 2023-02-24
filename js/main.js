@@ -232,6 +232,7 @@ const typesColors = {
   Ténèbres: "#75574c",
   Fée: "#e69eac",
 };
+let selectedType = "Tous";
 
 async function fetchAllPokemons() {
   let data;
@@ -386,44 +387,55 @@ function switchEvo(pokemonEvo) {
 
 // Research Pokemon by name or ID
 function searchPokemon(searchInput) {
-  if (searchInput.split("").length < 3 && createdCards != 100) {
-    removeAllCards();
-    createdCards = 0;
-    addNewCards(100);
-    document.querySelector(".morePokemons").style.display = "block";
-  } else if (searchInput.split("").length >= 3) {
-    removeAllCards();
-    createdCards = 0;
-    for (let i = 0; i < pokemonsFetched.length; i++) {
-      if (
-        pokemonsFetched[i].pokemonName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        pokemonsFetched[i].pokemonID.toString().includes(Number(searchInput))
-      ) {
-        pokemonsFetched[i].createMiniCard();
-        createdCards++;
+  // When a type isn't selected = default
+  if (selectedType.toLowerCase() === "tous") {
+    if (searchInput.split("").length < 3 && createdCards != 100) {
+      removeAllCards();
+      createdCards = 0;
+      addNewCards(100);
+      document.querySelector(".morePokemons").style.display = "block";
+    } else if (searchInput.split("").length >= 3) {
+      removeAllCards();
+      createdCards = 0;
+      for (let i = 0; i < pokemonsFetched.length; i++) {
+        const currentPokemon = pokemonsFetched[i];
+        if (currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || currentPokemon.pokemonID.toString().includes(Number(searchInput))) {
+          currentPokemon.createMiniCard();
+          createdCards++;
+        }
       }
+      document.querySelector(".morePokemons").style.display = "none";
     }
-    document.querySelector(".morePokemons").style.display = "none";
   }
-}
-
-// Research Pokemon by type
-function searchPokemonByType(type) {
-  if (type !== "Tous") {
-    removeAllCards();
-    createdCards = 0;
-    for (let i = 0; i < pokemonsFetched.length; i++) {
-      if (pokemonsFetched[i].pokemonType1.toLowerCase().includes(type.toLowerCase())) {
-        pokemonsFetched[i].createMiniCard();
-        createdCards++;
+  // When a type is selected
+  else {
+    if (searchInput.split("").length < 3) {
+      removeAllCards();
+      createdCards = 0;
+      for (let i = 0; i < pokemonsFetched.length; i++) {
+        const currentPokemon = pokemonsFetched[i];
+        const currentPokemonTypes = [currentPokemon.pokemonType1.toLowerCase(), currentPokemon.pokemonType2.toLowerCase()];
+        if (currentPokemonTypes.includes(selectedType.toLowerCase())) {
+          currentPokemon.createMiniCard();
+          createdCards++;
+        }
+      }
+    } else {
+      removeAllCards();
+      createdCards = 0;
+      for (let i = 0; i < pokemonsFetched.length; i++) {
+        const currentPokemon = pokemonsFetched[i];
+        const currentPokemonTypes = [currentPokemon.pokemonType1.toLowerCase(), currentPokemon.pokemonType2.toLowerCase()];
+        if (
+          (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase())) ||
+          (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.pokemonID.toString().includes(Number(searchInput)))
+        ) {
+          currentPokemon.createMiniCard();
+          createdCards++;
+        }
       }
     }
     document.querySelector(".morePokemons").style.display = "none";
-  } else {
-    removeAllCards();
-    createdCards = 0;
-    addNewCards(100);
-    document.querySelector(".morePokemons").style.display = "block";
   }
 }
 
@@ -479,5 +491,6 @@ document.querySelector(".searchBar").addEventListener("input", (event) => {
 
 // Add event listener for type selection
 document.querySelector(".searchByType").addEventListener("input", (event) => {
-  searchPokemonByType(event.target.value);
+  selectedType = event.target.value;
+  searchPokemon(document.querySelector(".searchBar").value);
 });
