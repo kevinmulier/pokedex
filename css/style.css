@@ -393,6 +393,7 @@ main .loading {
 
 .pokemonCardMini .pokemonName {
   font-size: 1.4rem;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -600,6 +601,13 @@ footer a:any-link {
   }
 }
 
+@media (max-width: 768px) {
+  .pokemonCardMini {
+    width: 18vw;
+    height: 18vw;
+  }
+}
+
 @media (max-width: 580px) {
   main {
     padding: 20px 10px;
@@ -611,20 +619,19 @@ footer a:any-link {
   }
 
   .pokemonCardMini {
-    width: 21vw;
-    height: 21vw;
+    width: 25vw;
+    height: 25vw;
     margin-bottom: 10px;
   }
 
   .pokemonCardMini .pokemonId {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     position: absolute;
     right: 9%;
   }
 
   .pokemonCardMini .pokemonName {
     font-size: 1.2rem;
-    font-weight: bold;
     text-align: center;
   }
 
@@ -706,23 +713,22 @@ footer a:any-link {
 
   .pokemonModal .preEvoName,
   .pokemonModal .postEvoName {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 440px) {
   .pokemonCardMini {
-    width: 19vw;
-    height: 19vw;
-    margin-bottom: 10px;
+    width: 24vw;
+    height: 24vw;
   }
 
   .pokemonCardMini .pokemonId {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 
   .pokemonCardMini .pokemonName {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: bold;
     text-align: center;
   }
@@ -762,6 +768,11 @@ footer a:any-link {
 }
 
 @media (max-width: 300px) {
+  .pokemonCardMini {
+    width: 34vw;
+    height: 34vw;
+  }
+
   .pokemonModal .topLine {
     font-size: 1.2rem;
   }
@@ -786,7 +797,7 @@ footer a:any-link {
   .pokemonModal .nameSATK,
   .pokemonModal .nameSDEF,
   .pokemonModal .nameSPD {
-    font-size: 1rem;
+    font-size: 1.2rem;
     flex-basis: 20%;
   }
 
@@ -796,7 +807,7 @@ footer a:any-link {
   .pokemonModal .valueSATK,
   .pokemonModal .valueSDEF,
   .pokemonModal .valueSPD {
-    font-size: 1rem;
+    font-size: 1.2rem;
     flex-basis: 25%;
   }
 
