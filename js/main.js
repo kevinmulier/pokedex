@@ -386,19 +386,21 @@ function switchEvo(pokemonEvo) {
 
 // Research Pokemon
 function searchPokemon(searchInput) {
-  if (searchInput === "") {
+  if (searchInput.split("").length < 3 && createdCards != 100) {
     removeAllCards();
     createdCards = 0;
     addNewCards(100);
     document.querySelector(".morePokemons").style.display = "block";
-  } else {
+  } else if (searchInput.split("").length >= 3) {
     removeAllCards();
+    createdCards = 0;
     for (let i = 0; i < pokemonsFetched.length; i++) {
       if (
         pokemonsFetched[i].pokemonName.toLowerCase().includes(searchInput.toLowerCase()) ||
         pokemonsFetched[i].pokemonID.toString().includes(Number(searchInput))
       ) {
         pokemonsFetched[i].createMiniCard();
+        createdCards++;
       }
     }
     document.querySelector(".morePokemons").style.display = "none";
@@ -452,7 +454,5 @@ document.querySelector(".morePokemons").addEventListener("click", () => {
 
 // Add event listener for search bar
 document.querySelector(".searchBar").addEventListener("input", () => {
-  if (document.querySelector(".searchBar").value.split("").length > 2 || document.querySelector(".searchBar").value === "") {
-    searchPokemon(document.querySelector(".searchBar").value);
-  }
+  searchPokemon(document.querySelector(".searchBar").value);
 });
