@@ -119,12 +119,12 @@ main {
   align-content: flex-start;
   align-items: flex-start;
   gap: 30px;
-  margin-bottom: 30px;
 }
 
 .morePokemons {
   width: 70px;
   height: 70px;
+  margin-top: 30px;
   border: none;
   border-radius: 50%;
   background-color: var(--primary-color);
