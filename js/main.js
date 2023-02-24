@@ -93,7 +93,6 @@ class Pokemon {
     const modalBarSATK = document.querySelector(".barSATK");
     const modalBarSDEF = document.querySelector(".barSDEF");
     const modalBarSPD = document.querySelector(".barSPD");
-    const modalPreEvoTitle = document.querySelector(".preEvoTitle");
     const modalPreEvo = document.querySelector(".preEvoSection");
     const modalPostEvo = document.querySelector(".postEvoSection");
     let type1Color = typesColors[this.pokemonType1];
@@ -153,6 +152,7 @@ class Pokemon {
     if (this.pokemonPreEvolutions !== "none") {
       const title = document.createElement("h5");
       title.classList.add("preEvoTitle");
+      title.textContent = "Pré-évolution";
       modalPreEvo.appendChild(title);
       const section = document.createElement("section");
       section.classList.add("preEvo");
