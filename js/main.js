@@ -384,7 +384,7 @@ function switchEvo(pokemonEvo) {
   hideArrows(pokemonEvo);
 }
 
-// Research Pokemon
+// Research Pokemon by name or ID
 function searchPokemon(searchInput) {
   if (searchInput.split("").length < 3 && createdCards != 100) {
     removeAllCards();
@@ -404,6 +404,26 @@ function searchPokemon(searchInput) {
       }
     }
     document.querySelector(".morePokemons").style.display = "none";
+  }
+}
+
+// Research Pokemon by type
+function searchPokemonByType(type) {
+  if (type !== "Tous") {
+    removeAllCards();
+    createdCards = 0;
+    for (let i = 0; i < pokemonsFetched.length; i++) {
+      if (pokemonsFetched[i].pokemonType1.toLowerCase().includes(type.toLowerCase())) {
+        pokemonsFetched[i].createMiniCard();
+        createdCards++;
+      }
+    }
+    document.querySelector(".morePokemons").style.display = "none";
+  } else {
+    removeAllCards();
+    createdCards = 0;
+    addNewCards(100);
+    document.querySelector(".morePokemons").style.display = "block";
   }
 }
 
@@ -453,6 +473,11 @@ document.querySelector(".morePokemons").addEventListener("click", () => {
 });
 
 // Add event listener for search bar
-document.querySelector(".searchBar").addEventListener("input", () => {
-  searchPokemon(document.querySelector(".searchBar").value);
+document.querySelector(".searchBar").addEventListener("input", (event) => {
+  searchPokemon(event.target.value);
+});
+
+// Add event listener for type selection
+document.querySelector(".searchByType").addEventListener("input", (event) => {
+  searchPokemonByType(event.target.value);
 });
