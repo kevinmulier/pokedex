@@ -304,7 +304,7 @@ async function addNewCards(num = 50) {
       pokemonsFetched[i].createMiniCard();
       createdCards++;
     } else {
-      document.querySelector(".morePokemons").remove();
+      document.querySelector(".morePokemons").style.display = "none";
     }
   }
 }
