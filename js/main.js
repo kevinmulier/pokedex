@@ -477,7 +477,7 @@ function hideMorePokemons() {
 function swipeDetect(element, callback) {
   // Initialize variables
   const touchSurface = element,
-    threshold = 150,
+    threshold = 80,
     restraint = 100,
     allowedTime = 300,
     handleSwipe = callback;
