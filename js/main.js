@@ -522,19 +522,43 @@ function swipeDetect(element, callback) {
 // Switch to previous or next pokemon when swiping on modal
 function swipePreviousOrNextPokemon(swipeDir) {
   const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
-  removeTypeModal();
   if (swipeDir === "right" && currentPokemon !== 0) {
+    removeTypeModal();
     switchPokemon(currentPokemon - 1);
   } else if (swipeDir === "right" && currentPokemon === 0) {
+    removeTypeModal();
     switchPokemon(currentPokemon + 897);
   } else if (swipeDir === "left" && currentPokemon !== 897) {
+    removeTypeModal();
     switchPokemon(currentPokemon + 1);
   } else if (swipeDir === "left" && currentPokemon === 897) {
+    removeTypeModal();
     switchPokemon(currentPokemon - 897);
   }
 }
 
 swipeDetect(document.querySelector(".pokemonModal"), swipePreviousOrNextPokemon);
+
+// Switch to previous or next pokemon when pressing
+
+document.addEventListener("keydown", (e) => {
+  if (!document.querySelector(".modalFilter").classList.contains("hidden")) {
+    const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
+    if (e.key === "ArrowLeft" && currentPokemon !== 0) {
+      removeTypeModal();
+      switchPokemon(currentPokemon - 1);
+    } else if (e.key === "ArrowLeft" && currentPokemon === 0) {
+      removeTypeModal();
+      switchPokemon(currentPokemon + 897);
+    } else if (e.key === "ArrowRight" && currentPokemon !== 897) {
+      removeTypeModal();
+      switchPokemon(currentPokemon + 1);
+    } else if (e.key === "ArrowRight" && currentPokemon === 897) {
+      removeTypeModal();
+      switchPokemon(currentPokemon - 897);
+    }
+  }
+});
 
 // Switch to previous or next pokemon when click on arrows
 document.querySelector(".leftArrow").addEventListener("click", () => {
