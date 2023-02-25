@@ -150,29 +150,38 @@ class Pokemon {
 
     // Add pre-Evolution
     if (this.pokemonPreEvolutions !== "none") {
+      const pokemonPreEvolutionsID = this.pokemonPreEvolutions.pokedexIdd - 1;
+      // Create title
       const title = document.createElement("h5");
       title.classList.add("preEvoTitle");
       title.textContent = "Pré-évolution";
       modalPreEvo.appendChild(title);
+      // Create section
       const section = document.createElement("section");
       section.classList.add("preEvo");
+      // Create thumbnail
       const thumbnail = document.createElement("img");
       thumbnail.classList.add("preEvoThumbnail");
-      thumbnail.src = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonThumbnail;
-      thumbnail.alt = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
-      thumbnail.addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      thumbnail.src = pokemonsFetched[pokemonPreEvolutionsID].pokemonThumbnail;
+      thumbnail.alt = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
+      thumbnail.addEventListener("click", () => switchEvo(pokemonPreEvolutionsID));
+      // Create name
       const name = document.createElement("span");
       name.classList.add("preEvoName");
-      name.textContent = pokemonsFetched[this.pokemonPreEvolutions.pokedexIdd - 1].pokemonName;
-      name.addEventListener("click", () => switchEvo(this.pokemonPreEvolutions.pokedexIdd - 1));
+      name.textContent = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
+      name.addEventListener("click", () => switchEvo(pokemonPreEvolutionsID));
+      // Append elements
       section.appendChild(thumbnail);
       section.appendChild(name);
       modalPreEvo.appendChild(section);
+      // Un-hide
       modalPreEvo.classList.remove("hidden");
     }
 
     // Add evolutions
     if (this.pokemonEvolutions.length !== 0) {
+      const pokemonEvolutions = this.pokemonEvolutions;
+      // Create title
       const title = document.createElement("h5");
       title.classList.add("postEvoTitle");
       if (this.pokemonEvolutions.length > 1) {
@@ -181,25 +190,34 @@ class Pokemon {
         title.textContent = "Évolution";
       }
       modalPostEvo.appendChild(title);
+      // Create section
       const section = document.createElement("section");
       section.classList.add("postEvo");
+      // Loop over each evolution
       for (let evolution of this.pokemonEvolutions) {
+        const currentEvolutionID = evolution.pokedexId - 1;
+        // Create thumbnail
         const thumbnail = document.createElement("img");
         thumbnail.classList.add("postEvoThumbnail");
-        thumbnail.src = pokemonsFetched[evolution.pokedexId - 1].pokemonThumbnail;
-        thumbnail.alt = pokemonsFetched[evolution.pokedexId - 1].pokemonName;
-        thumbnail.addEventListener("click", () => switchEvo(evolution.pokedexId - 1));
+        thumbnail.src = pokemonsFetched[currentEvolutionID].pokemonThumbnail;
+        thumbnail.alt = pokemonsFetched[currentEvolutionID].pokemonName;
+        thumbnail.addEventListener("click", () => switchEvo(currentEvolutionID));
+        // Create name
         const name = document.createElement("span");
         name.classList.add("postEvoName");
-        name.textContent = pokemonsFetched[evolution.pokedexId - 1].pokemonName;
-        name.addEventListener("click", () => switchEvo(evolution.pokedexId - 1));
+        name.textContent = pokemonsFetched[currentEvolutionID].pokemonName;
+        name.addEventListener("click", () => switchEvo(currentEvolutionID));
+        // Create subsection
         const subSection = document.createElement("section");
         subSection.classList.add("postEvoSub");
+        // Append elements
         subSection.appendChild(thumbnail);
         subSection.appendChild(name);
         section.appendChild(subSection);
       }
+      // Append the section
       modalPostEvo.appendChild(section);
+      // Un-hide
       modalPostEvo.classList.remove("hidden");
     }
 
@@ -455,18 +473,85 @@ function hideMorePokemons() {
   document.querySelector(".morePokemons").style.display = "block";
 }
 
+// Handle swipe (left or right only)
+function swipeDetect(element, callback) {
+  // Initialize variables
+  const touchSurface = element,
+    threshold = 150,
+    restraint = 100,
+    allowedTime = 300,
+    handleSwipe = callback;
+  let swipeDir, startX, startY, distX, distY, elapsedTime, startTime;
+
+  // Handle swipe start
+  touchSurface.addEventListener(
+    "touchstart",
+    (e) => {
+      const touchObj = e.changedTouches[0];
+      swipeDir = "none";
+      startX = touchObj.pageX;
+      startY = touchObj.pageY;
+      startTime = new Date().getTime();
+    },
+    false
+  );
+
+  // Avoid default behavior during swipe
+  touchSurface.addEventListener(
+    "touchmove",
+    (e) => {
+      e.preventDefault();
+    },
+    false
+  );
+
+  // Handle end event (removing finger after swipe)
+  touchSurface.addEventListener(
+    "touchend",
+    (e) => {
+      let touchObj = e.changedTouches[0];
+      distX = touchObj.pageX - startX;
+      distY = touchObj.pageY - startY;
+      elapsedTime = new Date().getTime() - startTime;
+      if (elapsedTime <= allowedTime) {
+        if (Math.abs(distX) >= threshold && Math.abs(distY <= restraint)) {
+          swipeDir = distX < 0 ? "left" : "right";
+        }
+      }
+      handleSwipe(swipeDir);
+    },
+    false
+  );
+}
+
+// Switch to previous or next pokemon when swiping on modal
+function swipePreviousOrNextPokemon(swipeDir) {
+  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
+  if (swipeDir === "right" && currentPokemon !== 0) {
+    removeTypeModal();
+    switchPreviousPokemon(currentPokemon - 1);
+  } else if (swipeDir === "left") {
+    removeTypeModal();
+    switchNextPokemon(currentPokemon + 1);
+  }
+}
+
+swipeDetect(document.querySelector(".pokemonModal"), swipePreviousOrNextPokemon);
+
 // Switch to previous or next pokemon when click on arrows
 document.querySelector(".leftArrow").addEventListener("click", () => {
+  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
   removeTypeModal();
-  switchPreviousPokemon(pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent) - 1);
+  switchPreviousPokemon(currentPokemon - 1);
 });
 
 document.querySelector(".rightArrow").addEventListener("click", () => {
+  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
   removeTypeModal();
-  switchNextPokemon(pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent) + 1);
+  switchNextPokemon(currentPokemon + 1);
 });
 
-// Add new cards
+// Add new cards at first loading
 addNewCards(30);
 
 // Hide the modal when clicking on the close button
