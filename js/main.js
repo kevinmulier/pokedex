@@ -371,12 +371,7 @@ function removeTypeModal() {
 }
 
 // Switch to previous or next pokemon when click on arrows
-function switchPreviousPokemon(pokemonID) {
-  removeTypeModal();
-  pokemonsFetched[pokemonID].showFilledModal();
-  hideArrows(pokemonID);
-}
-function switchNextPokemon(pokemonID) {
+function switchPokemon(pokemonID) {
   removeTypeModal();
   pokemonsFetched[pokemonID].showFilledModal();
   hideArrows(pokemonID);
@@ -527,12 +522,15 @@ function swipeDetect(element, callback) {
 // Switch to previous or next pokemon when swiping on modal
 function swipePreviousOrNextPokemon(swipeDir) {
   const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
+  removeTypeModal();
   if (swipeDir === "right" && currentPokemon !== 0) {
-    removeTypeModal();
-    switchPreviousPokemon(currentPokemon - 1);
-  } else if (swipeDir === "left") {
-    removeTypeModal();
-    switchNextPokemon(currentPokemon + 1);
+    switchPokemon(currentPokemon - 1);
+  } else if (swipeDir === "right" && currentPokemon === 0) {
+    switchPokemon(currentPokemon + 897);
+  } else if (swipeDir === "left" && currentPokemon !== 897) {
+    switchPokemon(currentPokemon + 1);
+  } else if (swipeDir === "left" && currentPokemon === 897) {
+    switchPokemon(currentPokemon - 897);
   }
 }
 
@@ -542,13 +540,13 @@ swipeDetect(document.querySelector(".pokemonModal"), swipePreviousOrNextPokemon)
 document.querySelector(".leftArrow").addEventListener("click", () => {
   const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
   removeTypeModal();
-  switchPreviousPokemon(currentPokemon - 1);
+  switchPokemon(currentPokemon - 1);
 });
 
 document.querySelector(".rightArrow").addEventListener("click", () => {
   const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
   removeTypeModal();
-  switchNextPokemon(currentPokemon + 1);
+  switchPokemon(currentPokemon + 1);
 });
 
 // Add new cards at first loading
