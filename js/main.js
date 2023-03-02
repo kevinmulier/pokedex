@@ -159,12 +159,12 @@ class Pokemon {
       thumbnail.classList.add("preEvoThumbnail");
       thumbnail.src = pokemonsFetched[pokemonPreEvolutionsID].pokemonThumbnail;
       thumbnail.alt = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
-      thumbnail.addEventListener("click", () => switchEvo(pokemonPreEvolutionsID));
+      thumbnail.addEventListener("click", () => switchPokemon(pokemonPreEvolutionsID));
       // Create name
       const name = document.createElement("span");
       name.classList.add("preEvoName");
       name.textContent = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
-      name.addEventListener("click", () => switchEvo(pokemonPreEvolutionsID));
+      name.addEventListener("click", () => switchPokemon(pokemonPreEvolutionsID));
       // Append elements
       section.appendChild(thumbnail);
       section.appendChild(name);
@@ -196,12 +196,12 @@ class Pokemon {
         thumbnail.classList.add("postEvoThumbnail");
         thumbnail.src = pokemonsFetched[currentEvolutionID].pokemonThumbnail;
         thumbnail.alt = pokemonsFetched[currentEvolutionID].pokemonName;
-        thumbnail.addEventListener("click", () => switchEvo(currentEvolutionID));
+        thumbnail.addEventListener("click", () => switchPokemon(currentEvolutionID));
         // Create name
         const name = document.createElement("span");
         name.classList.add("postEvoName");
         name.textContent = pokemonsFetched[currentEvolutionID].pokemonName;
-        name.addEventListener("click", () => switchEvo(currentEvolutionID));
+        name.addEventListener("click", () => switchPokemon(currentEvolutionID));
         // Create subsection
         const subSection = document.createElement("section");
         subSection.classList.add("postEvoSub");
@@ -367,7 +367,7 @@ function removeTypeModal() {
   modal.style.background = null;
 }
 
-// Switch to previous or next pokemon when click on arrows
+// Switch to another pokemon
 function switchPokemon(pokemonID) {
   removeTypeModal();
   pokemonsFetched[pokemonID].showFilledModal();
@@ -386,13 +386,6 @@ function hideArrows(pokemonID) {
     document.querySelector(".leftArrow").classList.remove("hidden");
     document.querySelector(".rightArrow").classList.remove("hidden");
   }
-}
-
-// Switch to pre-evo/evo when clicking on it
-function switchEvo(pokemonEvo) {
-  removeTypeModal();
-  pokemonsFetched[pokemonEvo].showFilledModal();
-  hideArrows(pokemonEvo);
 }
 
 // Research Pokemon by name or ID
