@@ -12,7 +12,8 @@ class Pokemon {
     pokemonSpecialDefense,
     pokemonSpeed,
     pokemonEvolutions,
-    pokemonPreEvolutions
+    pokemonPreEvolutions,
+    pokemonShownID
   ) {
     this.pokemonID = pokemonID;
     this.pokemonThumbnail = pokemonThumbnail;
@@ -27,13 +28,7 @@ class Pokemon {
     this.pokemonSpeed = pokemonSpeed;
     this.pokemonEvolutions = pokemonEvolutions;
     this.pokemonPreEvolutions = pokemonPreEvolutions;
-    this.shownID = this.createShownID();
-  }
-
-  createShownID() {
-    let shownID;
-    this.pokemonID < 10 ? (shownID = `#00${this.pokemonID}`) : this.pokemonID < 100 ? (shownID = `#0${this.pokemonID}`) : (shownID = `#${this.pokemonID}`);
-    return shownID;
+    this.pokemonShownID = pokemonShownID;
   }
 
   createMiniCard() {
@@ -52,7 +47,7 @@ class Pokemon {
     // Create the pokemon id element
     const newPokemonID = document.createElement("span");
     newPokemonID.classList.add("pokemonId");
-    newPokemonID.textContent = this.shownID;
+    newPokemonID.textContent = this.pokemonShownID;
     newMiniCard.appendChild(newPokemonID);
     // Create the pokemon thumbnail element
     const newPokemonThumbnail = document.createElement("img");
@@ -99,7 +94,7 @@ class Pokemon {
     let type2Color = typesColors[this.pokemonType2];
     // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
-    topLinePokemonID.textContent = this.shownID;
+    topLinePokemonID.textContent = this.pokemonShownID;
     modalImage.src = this.pokemonThumbnail;
     modalImage.alt = this.pokemonName;
     modalType1.textContent = this.pokemonType1;
@@ -267,9 +262,10 @@ async function fetchAllPokemons() {
   // Create new Pokemons
   for (let i = 0; i < 898; i++) {
     const pokemonID = data[i].pokedexId;
-    let shownID;
-    pokemonID < 10 ? (shownID = `00${pokemonID}`) : pokemonID < 100 ? (shownID = `0${pokemonID}`) : (shownID = `${pokemonID}`);
-    const pokemonThumbnail = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${shownID}.png`;
+    let pokemonShownID;
+    pokemonID < 10 ? (pokemonShownID = `00${pokemonID}`) : pokemonID < 100 ? (pokemonShownID = `0${pokemonID}`) : (pokemonShownID = `${pokemonID}`);
+    const pokemonThumbnail = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png`;
+    pokemonShownID = `#${pokemonShownID}`;
     const pokemonName = data[i].name;
     const pokemonType1 = data[i].apiTypes[0].name;
     let pokemonType2;
@@ -301,7 +297,8 @@ async function fetchAllPokemons() {
           pokemonSpecialDefense,
           pokemonSpeed,
           pokemonEvolutions,
-          pokemonPreEvolutions
+          pokemonPreEvolutions,
+          pokemonShownID
         )
       );
     }
