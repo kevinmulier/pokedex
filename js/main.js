@@ -449,15 +449,6 @@ function removeAllCards() {
   }
 }
 
-// Hide "More Pokemons" button
-function hideMorePokemons() {
-  document.querySelector(".morePokemons").style.display = "none";
-}
-// Show "More Pokemons" button
-function hideMorePokemons() {
-  document.querySelector(".morePokemons").style.display = "block";
-}
-
 // Handle swipe (left or right only)
 function swipeDetect(element, callback) {
   // Initialize variables
