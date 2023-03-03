@@ -382,9 +382,10 @@ header h1 {
   font-size: 1.5rem;
 }
 
-main .loading {
+main .loading,
+main .searchNoResult {
   font-family: "Press Start 2P", cursive;
-  font-size: 2.5rem;
+  font-size: 2rem;
   line-height: 5rem;
   text-align: center;
 }
