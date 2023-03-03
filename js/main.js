@@ -555,7 +555,7 @@ document.querySelector(".rightArrow").addEventListener("click", () => {
 });
 
 // Add new cards at first loading
-addNewCards(30);
+addNewCards(50);
 
 // Hide the modal when clicking on the close button
 document.querySelector(".topLineArrow").addEventListener("click", hideModal);
