@@ -395,8 +395,10 @@ function searchPokemon(searchInput) {
     if (searchInput.split("").length < 3 && createdCards != 100) {
       removeAllCards();
       createdCards = 0;
+      console.log(createdCards);
       addNewCards(100);
       document.querySelector(".morePokemons").style.display = "block";
+      document.querySelector(".searchNoResult").classList.add("hidden");
     } else if (searchInput.split("").length >= 3) {
       removeAllCards();
       createdCards = 0;
@@ -408,6 +410,7 @@ function searchPokemon(searchInput) {
         }
       }
       document.querySelector(".morePokemons").style.display = "none";
+      addNoResultMessage();
     }
   }
   // When a type is selected
@@ -423,6 +426,7 @@ function searchPokemon(searchInput) {
           createdCards++;
         }
       }
+      document.querySelector(".searchNoResult").classList.add("hidden");
     } else {
       removeAllCards();
       createdCards = 0;
@@ -437,8 +441,17 @@ function searchPokemon(searchInput) {
           createdCards++;
         }
       }
+      addNoResultMessage();
     }
     document.querySelector(".morePokemons").style.display = "none";
+  }
+}
+
+function addNoResultMessage() {
+  if (createdCards === 0) {
+    document.querySelector(".searchNoResult").classList.remove("hidden");
+  } else {
+    document.querySelector(".searchNoResult").classList.add("hidden");
   }
 }
 
@@ -520,7 +533,7 @@ function swipePreviousOrNextPokemon(swipeDir) {
 
 swipeDetect(document.querySelector(".pokemonModal"), swipePreviousOrNextPokemon);
 
-// Switch to previous or next pokemon when pressing
+// Switch to previous or next pokemon when pressing left and right arrows
 
 document.addEventListener("keydown", (e) => {
   if (!document.querySelector(".modalFilter").classList.contains("hidden")) {
