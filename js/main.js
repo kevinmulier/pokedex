@@ -56,7 +56,6 @@ class Pokemon {
     newPokemonThumbnail.classList.add("pokemonThumbnail");
     newPokemonThumbnail.src = this.pokemonThumbnail;
     newPokemonThumbnail.alt = this.pokemonName;
-    newPokemonThumbnail.loading = "lazy";
     newMiniCard.appendChild(newPokemonThumbnail);
     // Create the pokemon name element
     const newPokemonName = document.createElement("h2");
