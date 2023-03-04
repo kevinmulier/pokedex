@@ -2,6 +2,7 @@ class Pokemon {
   constructor(
     pokemonID,
     pokemonThumbnail,
+    pokemonImage,
     pokemonName,
     pokemonType1,
     pokemonType2,
@@ -17,6 +18,7 @@ class Pokemon {
   ) {
     this.pokemonID = pokemonID;
     this.pokemonThumbnail = pokemonThumbnail;
+    this.pokemonImage = pokemonImage;
     this.pokemonName = pokemonName;
     this.pokemonType1 = pokemonType1;
     this.pokemonType2 = pokemonType2;
@@ -95,7 +97,7 @@ class Pokemon {
     // Modify text, src and attribute contents
     topLinePokemonName.textContent = this.pokemonName;
     topLinePokemonID.textContent = this.pokemonShownID;
-    modalImage.src = this.pokemonThumbnail;
+    modalImage.src = this.pokemonImage;
     modalImage.alt = this.pokemonName;
     modalType1.textContent = this.pokemonType1;
     modalType2.textContent = this.pokemonType2;
@@ -264,7 +266,8 @@ async function fetchAllPokemons() {
     const pokemonID = data[i].pokedexId;
     let pokemonShownID;
     pokemonID < 10 ? (pokemonShownID = `00${pokemonID}`) : pokemonID < 100 ? (pokemonShownID = `0${pokemonID}`) : (pokemonShownID = `${pokemonID}`);
-    const pokemonThumbnail = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png`;
+    const pokemonThumbnail = `https://imagecdn.app/v2/image/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png?width=105&height=105&format=webp`;
+    const pokemonImage = `https://imagecdn.app/v2/image/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png?width=215&height=215&format=webp`;
     pokemonShownID = `#${pokemonShownID}`;
     const pokemonName = data[i].name;
     const pokemonType1 = data[i].apiTypes[0].name;
@@ -287,6 +290,7 @@ async function fetchAllPokemons() {
         new Pokemon(
           pokemonID,
           pokemonThumbnail,
+          pokemonImage,
           pokemonName,
           pokemonType1,
           pokemonType2,
