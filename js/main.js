@@ -485,16 +485,7 @@ function swipeDetect(element, callback) {
       startY = touchObj.pageY;
       startTime = new Date().getTime();
     },
-    false
-  );
-
-  // Avoid default behavior during swipe
-  touchSurface.addEventListener(
-    "touchmove",
-    (e) => {
-      e.preventDefault();
-    },
-    false
+    { passive: true }
   );
 
   // Handle end event (removing finger after swipe)
