@@ -458,6 +458,31 @@ function addNoResultMessage() {
   }
 }
 
+// Sort Pokemon by name
+function sortPokemonsByName() {
+  pokemonsFetched.sort((a, b) => {
+    if (
+      a.pokemonName
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase() >
+      b.pokemonName
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase()
+    ) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+}
+
+// Sort Pokemons by ID
+function sortPokemonsByID() {
+  pokemonsFetched.sort((a, b) => a.pokemonID - b.pokemonID);
+}
+
 // Remove all minicards
 function removeAllCards() {
   while (document.querySelector(".cardsSection").firstChild) {
