@@ -398,7 +398,6 @@ function searchPokemon(searchInput) {
     if (searchInput.split("").length < 3 && createdCards != 100) {
       removeAllCards();
       createdCards = 0;
-      console.log(createdCards);
       addNewCards(100);
       document.querySelector(".morePokemons").style.display = "block";
       document.querySelector(".searchNoResult").classList.add("hidden");
@@ -610,7 +609,7 @@ document.querySelector(".searchBar").addEventListener("input", (event) => {
 });
 
 // Add event listener for type selection
-document.querySelector(".searchByType").addEventListener("input", (event) => {
+document.querySelector("#selectType").addEventListener("input", (event) => {
   selectedType = event.target.value;
   searchPokemon(document.querySelector(".searchBar").value);
 });
