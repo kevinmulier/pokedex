@@ -62,6 +62,7 @@ header img {
   margin: 0 auto 20px;
   display: flex;
   justify-content: center;
+  gap: 20px;
 }
 
 .searchBarSection input {
@@ -728,6 +729,11 @@ footer a:any-link {
 }
 
 @media (max-width: 440px) {
+  .searchByType select {
+    font-size: 1.2rem;
+    background-position: calc(100% - 20px) calc(1.5em), calc(100% - 15px) calc(1.5em), 100% 0;
+  }
+
   .pokemonCardMini {
     width: 24vw;
     height: 24vw;
