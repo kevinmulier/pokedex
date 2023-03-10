@@ -225,6 +225,7 @@ class Pokemon {
 }
 
 const pokemonsFetched = [];
+let currentSelectedID = [];
 let createdCards = 0;
 const typesColors = {
   Normal: "#aaa67f",
@@ -393,6 +394,7 @@ function hideArrows(pokemonID) {
 
 // Research Pokemon by name or ID
 function searchPokemon(searchInput) {
+  currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
   // When a type isn't selected = default
   if (selectedType.toLowerCase() === "tous") {
     if (searchInput.split("").length < 3 && createdCards != 100) {
@@ -587,6 +589,7 @@ document.querySelector(".rightArrow").addEventListener("click", () => {
 
 // Add new cards at first loading
 addNewCards(50);
+currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
 
 // Hide the modal when clicking on the close button
 document.querySelector(".topLineArrow").addEventListener("click", hideModal);
@@ -611,5 +614,17 @@ document.querySelector(".searchBar").addEventListener("input", (event) => {
 // Add event listener for type selection
 document.querySelector("#selectType").addEventListener("input", (event) => {
   selectedType = event.target.value;
+  searchPokemon(document.querySelector(".searchBar").value);
+});
+
+// Add event listener for Pokemons sorting
+document.querySelector("#sortPokemons").addEventListener("input", (event) => {
+  removeAllCards();
+  createdCards = 0;
+  if (event.target.value === "id") {
+    sortPokemonsByID();
+  } else {
+    sortPokemonsByName();
+  }
   searchPokemon(document.querySelector(".searchBar").value);
 });
