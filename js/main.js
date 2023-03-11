@@ -158,13 +158,13 @@ class Pokemon {
       // Create thumbnail
       const thumbnail = document.createElement("img");
       thumbnail.classList.add("preEvoThumbnail");
-      thumbnail.src = pokemonsFetched[pokemonPreEvolutionsID].pokemonThumbnail;
-      thumbnail.alt = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
+      thumbnail.src = pokemonsFetchedIdOrdered[pokemonPreEvolutionsID].pokemonThumbnail;
+      thumbnail.alt = pokemonsFetchedIdOrdered[pokemonPreEvolutionsID].pokemonName;
       thumbnail.addEventListener("click", () => switchPokemon(pokemonPreEvolutionsID));
       // Create name
       const name = document.createElement("span");
       name.classList.add("preEvoName");
-      name.textContent = pokemonsFetched[pokemonPreEvolutionsID].pokemonName;
+      name.textContent = pokemonsFetchedIdOrdered[pokemonPreEvolutionsID].pokemonName;
       name.addEventListener("click", () => switchPokemon(pokemonPreEvolutionsID));
       // Append elements
       section.appendChild(thumbnail);
@@ -195,13 +195,13 @@ class Pokemon {
         // Create thumbnail
         const thumbnail = document.createElement("img");
         thumbnail.classList.add("postEvoThumbnail");
-        thumbnail.src = pokemonsFetched[currentEvolutionID].pokemonThumbnail;
-        thumbnail.alt = pokemonsFetched[currentEvolutionID].pokemonName;
+        thumbnail.src = pokemonsFetchedIdOrdered[currentEvolutionID].pokemonThumbnail;
+        thumbnail.alt = pokemonsFetchedIdOrdered[currentEvolutionID].pokemonName;
         thumbnail.addEventListener("click", () => switchPokemon(currentEvolutionID));
         // Create name
         const name = document.createElement("span");
         name.classList.add("postEvoName");
-        name.textContent = pokemonsFetched[currentEvolutionID].pokemonName;
+        name.textContent = pokemonsFetchedIdOrdered[currentEvolutionID].pokemonName;
         name.addEventListener("click", () => switchPokemon(currentEvolutionID));
         // Create subsection
         const subSection = document.createElement("section");
@@ -371,13 +371,6 @@ function removeTypeModal() {
   modal.style.background = null;
 }
 
-// Switch to another pokemon
-function switchPokemon(pokemonID) {
-  removeTypeModal();
-  pokemonsFetched[pokemonID].showFilledModal();
-  hideArrows(pokemonID);
-}
-
 // Hide arrows for switching pokemon if necessary
 function hideArrows(pokemonID) {
   if (pokemonID === 0) {
@@ -394,23 +387,25 @@ function hideArrows(pokemonID) {
 
 // Research Pokemon by name or ID
 function searchPokemon(searchInput) {
-  currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
   // When a type isn't selected = default
   if (selectedType.toLowerCase() === "tous") {
     if (searchInput.split("").length < 3 && createdCards != 100) {
+      currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
       removeAllCards();
       createdCards = 0;
       addNewCards(100);
       document.querySelector(".morePokemons").style.display = "block";
       document.querySelector(".searchNoResult").classList.add("hidden");
     } else if (searchInput.split("").length >= 3) {
+      currentSelectedID = [];
       removeAllCards();
       createdCards = 0;
       for (let i = 0; i < pokemonsFetched.length; i++) {
         const currentPokemon = pokemonsFetched[i];
-        if (currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || currentPokemon.pokemonID.toString().includes(Number(searchInput))) {
+        if (currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || currentPokemon.toString().includes(Number(searchInput))) {
           currentPokemon.createMiniCard();
           createdCards++;
+          currentSelectedID.push(currentPokemon.pokemonID);
         }
       }
       document.querySelector(".morePokemons").style.display = "none";
@@ -420,6 +415,7 @@ function searchPokemon(searchInput) {
   // When a type is selected
   else {
     if (searchInput.split("").length < 3) {
+      currentSelectedID = [];
       removeAllCards();
       createdCards = 0;
       for (let i = 0; i < pokemonsFetched.length; i++) {
@@ -428,10 +424,12 @@ function searchPokemon(searchInput) {
         if (currentPokemonTypes.includes(selectedType.toLowerCase())) {
           currentPokemon.createMiniCard();
           createdCards++;
+          currentSelectedID.push(currentPokemon.pokemonID);
         }
       }
       document.querySelector(".searchNoResult").classList.add("hidden");
     } else {
+      currentSelectedID = [];
       removeAllCards();
       createdCards = 0;
       for (let i = 0; i < pokemonsFetched.length; i++) {
@@ -439,10 +437,11 @@ function searchPokemon(searchInput) {
         const currentPokemonTypes = [currentPokemon.pokemonType1.toLowerCase(), currentPokemon.pokemonType2.toLowerCase()];
         if (
           (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase())) ||
-          (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.pokemonID.toString().includes(Number(searchInput)))
+          (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.toString().includes(Number(searchInput)))
         ) {
           currentPokemon.createMiniCard();
           createdCards++;
+          currentSelectedID.push(currentPokemon.pokemonID);
         }
       }
       addNoResultMessage();
@@ -533,21 +532,35 @@ function swipeDetect(element, callback) {
   );
 }
 
+// Switch to another pokemon
+function switchPokemon(targetPokemonID) {
+  targetPokemonID = pokemonsFetched.findIndex((el) => el.pokemonID - 1 === targetPokemonID);
+  removeTypeModal();
+  if (targetPokemonID !== -1) {
+    pokemonsFetched[targetPokemonID].showFilledModal();
+  } else {
+    pokemonsFetched[currentSelectedID[0] - 1].showFilledModal();
+  }
+  hideArrows(targetPokemonID);
+}
+
 // Switch to previous or next pokemon when swiping on modal
 function swipePreviousOrNextPokemon(swipeDir) {
-  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
-  if (swipeDir === "right" && currentPokemon !== 0) {
+  const currentPokemonIndex = currentSelectedID.findIndex(
+    (pokemonID) => pokemonID === Number(document.querySelector(".topLinePokemonID").textContent.replace("#", ""))
+  );
+  if (swipeDir === "right" && currentSelectedID[currentPokemonIndex] !== currentSelectedID[0]) {
     removeTypeModal();
-    switchPokemon(currentPokemon - 1);
-  } else if (swipeDir === "right" && currentPokemon === 0) {
+    switchPokemon(currentSelectedID[currentPokemonIndex - 1] - 1);
+  } else if (swipeDir === "right" && currentSelectedID[currentPokemonIndex] === currentSelectedID[0]) {
     removeTypeModal();
-    switchPokemon(currentPokemon + 897);
-  } else if (swipeDir === "left" && currentPokemon !== 897) {
+    switchPokemon(currentSelectedID[currentSelectedID.length - 1] - 1);
+  } else if (swipeDir === "left" && currentSelectedID[currentPokemonIndex] !== currentSelectedID[currentSelectedID.length - 1]) {
     removeTypeModal();
-    switchPokemon(currentPokemon + 1);
-  } else if (swipeDir === "left" && currentPokemon === 897) {
+    switchPokemon(currentSelectedID[currentPokemonIndex + 1] - 1);
+  } else if (swipeDir === "left" && currentSelectedID[currentPokemonIndex] === currentSelectedID[currentSelectedID.length - 1]) {
     removeTypeModal();
-    switchPokemon(currentPokemon - 897);
+    switchPokemon(currentSelectedID[0] - 1);
   }
 }
 
@@ -557,39 +570,56 @@ swipeDetect(document.querySelector(".pokemonModal"), swipePreviousOrNextPokemon)
 
 document.addEventListener("keydown", (e) => {
   if (!document.querySelector(".modalFilter").classList.contains("hidden")) {
-    const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
-    if (e.key === "ArrowLeft" && currentPokemon !== 0) {
+    const currentPokemonIndex = currentSelectedID.findIndex(
+      (pokemonID) => pokemonID === Number(document.querySelector(".topLinePokemonID").textContent.replace("#", ""))
+    );
+    if (e.key === "ArrowLeft" && currentSelectedID[currentPokemonIndex] !== currentSelectedID[0]) {
       removeTypeModal();
-      switchPokemon(currentPokemon - 1);
-    } else if (e.key === "ArrowLeft" && currentPokemon === 0) {
+      switchPokemon(currentSelectedID[currentPokemonIndex - 1] - 1);
+    } else if (e.key === "ArrowLeft" && currentSelectedID[currentPokemonIndex] === currentSelectedID[0]) {
       removeTypeModal();
-      switchPokemon(currentPokemon + 897);
-    } else if (e.key === "ArrowRight" && currentPokemon !== 897) {
+      switchPokemon(currentSelectedID[currentSelectedID.length - 1] - 1);
+    } else if (e.key === "ArrowRight" && currentSelectedID[currentPokemonIndex] !== currentSelectedID[currentSelectedID.length - 1]) {
       removeTypeModal();
-      switchPokemon(currentPokemon + 1);
-    } else if (e.key === "ArrowRight" && currentPokemon === 897) {
+      switchPokemon(currentSelectedID[currentPokemonIndex + 1] - 1);
+    } else if (e.key === "ArrowRight" && currentSelectedID[currentPokemonIndex] === currentSelectedID[currentSelectedID.length - 1]) {
       removeTypeModal();
-      switchPokemon(currentPokemon - 897);
+      switchPokemon(currentSelectedID[0] - 1);
     }
   }
 });
 
 // Switch to previous or next pokemon when click on arrows
 document.querySelector(".leftArrow").addEventListener("click", () => {
-  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
-  removeTypeModal();
-  switchPokemon(currentPokemon - 1);
+  const currentPokemonIndex = currentSelectedID.findIndex(
+    (pokemonID) => pokemonID === Number(document.querySelector(".topLinePokemonID").textContent.replace("#", ""))
+  );
+  if (currentSelectedID[currentPokemonIndex] !== currentSelectedID[0]) {
+    removeTypeModal();
+    switchPokemon(currentSelectedID[currentPokemonIndex - 1] - 1);
+  } else if (currentSelectedID[currentPokemonIndex] === currentSelectedID[0]) {
+    removeTypeModal();
+    switchPokemon(currentSelectedID[currentSelectedID.length - 1] - 1);
+  }
 });
 
 document.querySelector(".rightArrow").addEventListener("click", () => {
-  const currentPokemon = pokemonsFetched.findIndex((pokemon) => pokemon.pokemonName === document.querySelector(".topLinePokemonName").textContent);
-  removeTypeModal();
-  switchPokemon(currentPokemon + 1);
+  const currentPokemonIndex = currentSelectedID.findIndex(
+    (pokemonID) => pokemonID === Number(document.querySelector(".topLinePokemonID").textContent.replace("#", ""))
+  );
+  if (currentSelectedID[currentPokemonIndex] !== currentSelectedID[currentSelectedID.length - 1]) {
+    removeTypeModal();
+    switchPokemon(currentSelectedID[currentPokemonIndex + 1] - 1);
+  } else if (currentSelectedID[currentPokemonIndex] === currentSelectedID[currentSelectedID.length - 1]) {
+    removeTypeModal();
+    switchPokemon(currentSelectedID[0] - 1);
+  }
 });
 
 // Add new cards at first loading
 addNewCards(50);
 currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
+pokemonsFetchedIdOrdered = pokemonsFetched.slice();
 
 // Hide the modal when clicking on the close button
 document.querySelector(".topLineArrow").addEventListener("click", hideModal);
