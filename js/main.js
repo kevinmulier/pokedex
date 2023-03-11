@@ -267,7 +267,7 @@ async function fetchAllPokemons() {
     let pokemonShownID;
     pokemonID < 10 ? (pokemonShownID = `00${pokemonID}`) : pokemonID < 100 ? (pokemonShownID = `0${pokemonID}`) : (pokemonShownID = `${pokemonID}`);
     const pokemonThumbnail = `https://imagecdn.app/v2/image/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png?width=105&height=105&format=webp`;
-    const pokemonImage = `https://imagecdn.app/v2/image/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png?width=215&height=215&format=webp`;
+    const pokemonImage = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonShownID}.png`;
     pokemonShownID = `#${pokemonShownID}`;
     const pokemonName = data[i].name;
     const pokemonType1 = data[i].apiTypes[0].name;
