@@ -402,7 +402,19 @@ function searchPokemon(searchInput) {
       createdCards = 0;
       for (let i = 0; i < pokemonsFetched.length; i++) {
         const currentPokemon = pokemonsFetched[i];
-        if (currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase()) || currentPokemon.toString().includes(Number(searchInput))) {
+        if (
+          currentPokemon.pokemonName
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .includes(
+              searchInput
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+            ) ||
+          currentPokemon.toString().includes(Number(searchInput))
+        ) {
           currentPokemon.createMiniCard();
           createdCards++;
           currentSelectedID.push(currentPokemon.pokemonID);
@@ -436,7 +448,17 @@ function searchPokemon(searchInput) {
         const currentPokemon = pokemonsFetched[i];
         const currentPokemonTypes = [currentPokemon.pokemonType1.toLowerCase(), currentPokemon.pokemonType2.toLowerCase()];
         if (
-          (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.pokemonName.toLowerCase().includes(searchInput.toLowerCase())) ||
+          (currentPokemonTypes.includes(selectedType.toLowerCase()) &&
+            currentPokemon.pokemonName
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .toLowerCase()
+              .includes(
+                searchInput
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .toLowerCase()
+              )) ||
           (currentPokemonTypes.includes(selectedType.toLowerCase()) && currentPokemon.toString().includes(Number(searchInput)))
         ) {
           currentPokemon.createMiniCard();
