@@ -216,15 +216,13 @@ class Pokemon {
       // Un-hide
       modalPostEvo.classList.remove("hidden");
     }
-
-    // Remove arrows if necessary
-    hideArrows(this.pokemonID - 1);
     // Display the modal
     bgModal.classList.remove("hidden");
   }
 }
 
 const pokemonsFetched = [];
+let pokemonsFetchedIdOrdered = [];
 let currentSelectedID = [];
 let createdCards = 0;
 const typesColors = {
@@ -307,6 +305,13 @@ async function fetchAllPokemons() {
       );
     }
   }
+  // Check if currentSelectedID & pokemonsFetchedIdOrdered are empty, fill them if it's the case
+  if (currentSelectedID.length === 0) {
+    currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
+  }
+  if (pokemonsFetchedIdOrdered.length === 0) {
+    pokemonsFetchedIdOrdered = pokemonsFetched.slice();
+  }
 }
 
 async function addNewCards(num = 50) {
@@ -369,20 +374,6 @@ function removeTypeModal() {
     modalType2.classList.remove(type.toLowerCase());
   });
   modal.style.background = null;
-}
-
-// Hide arrows for switching pokemon if necessary
-function hideArrows(pokemonID) {
-  if (pokemonID === 0) {
-    document.querySelector(".leftArrow").classList.add("hidden");
-    document.querySelector(".rightArrow").classList.remove("hidden");
-  } else if (pokemonID === 897) {
-    document.querySelector(".rightArrow").classList.add("hidden");
-    document.querySelector(".leftArrow").classList.remove("hidden");
-  } else {
-    document.querySelector(".leftArrow").classList.remove("hidden");
-    document.querySelector(".rightArrow").classList.remove("hidden");
-  }
 }
 
 // Research Pokemon by name or ID
@@ -563,7 +554,6 @@ function switchPokemon(targetPokemonID) {
   } else {
     pokemonsFetched[currentSelectedID[0] - 1].showFilledModal();
   }
-  hideArrows(targetPokemonID);
 }
 
 // Switch to previous or next pokemon when swiping on modal
@@ -640,8 +630,6 @@ document.querySelector(".rightArrow").addEventListener("click", () => {
 
 // Add new cards at first loading
 addNewCards(50);
-currentSelectedID = pokemonsFetched.map((pokemon) => pokemon.pokemonID);
-pokemonsFetchedIdOrdered = pokemonsFetched.slice();
 
 // Hide the modal when clicking on the close button
 document.querySelector(".topLineArrow").addEventListener("click", hideModal);
